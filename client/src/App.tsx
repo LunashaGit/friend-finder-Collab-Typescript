@@ -1,27 +1,36 @@
-import { CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AnimatePresence } from "framer-motion";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getUser } from "./actions/user.actions";
+import { UidContext } from "./components/AppContext";
+import Routes from "./components/Routes";
 
 const App = () => {
+  const [uid, setUid] = useState(null);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchToken = async () => {
+      await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API_URL}jwtid`,
+        withCredentials: true,
+      })
+        .then((res) => {
+          setUid(res.data);
+        })
+        .catch((err) => {
+          console.log("No token");
+        });
+    };
+    fetchToken();
+    if (uid) {
+      dispatch<any>(getUser(uid));
+    }
+  }, [dispatch, uid]);
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <AnimatePresence>
-          <CssBaseline />
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </AnimatePresence>
-      </ThemeProvider>
-    </BrowserRouter>
+    <UidContext.Provider value={uid}>
+      <Routes />
+    </UidContext.Provider>
   );
 };
 
