@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_router_dom_1 = require("react-router-dom");
+const home_1 = __importDefault(require("../../pages/home"));
 const Navbar_1 = __importDefault(require("../Navbar"));
-const home_1 = __importDefault(require("./../../pages/home"));
 const profil_1 = __importDefault(require("./../../pages/profil"));
 const trending_1 = __importDefault(require("./../../pages/trending"));
 const index = () => {

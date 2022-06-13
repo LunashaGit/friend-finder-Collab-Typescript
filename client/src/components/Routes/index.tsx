@@ -1,7 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "../../pages/home";
+
 import Navbar from "../Navbar";
-import Home from "./../../pages/home";
+
 import Profil from "./../../pages/profil";
 import Trending from "./../../pages/trending";
 
