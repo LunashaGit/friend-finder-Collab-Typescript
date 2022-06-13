@@ -46,6 +46,7 @@ const SignUpForm = () => {
     const handleRegister = (e) => __awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
         geoPos();
+        console.log(latitude);
         const terms = document.getElementById("terms");
         const pseudoError = document.querySelector(".pseudo.error");
         const emailError = document.querySelector(".email.error");
@@ -62,7 +63,7 @@ const SignUpForm = () => {
             if (!terms.checked) {
                 termsError.innerHTML = "veuillez valider les conditions generales";
             }
-            if (!Object.keys(latitude).length) {
+            if (Object.keys(latitude).length) {
                 console.log("erreur geoloc");
             }
         }
@@ -76,6 +77,7 @@ const SignUpForm = () => {
             })
                 .then((res) => {
                 setFormSubmit(true);
+                console.log(latitude);
             })
                 .catch((err) => {
                 pseudoError.innerHTML = err.response.data.errors.pseudo;

@@ -78,10 +78,10 @@ const userSchema = new mongoose_1.Schema({
         minlength: 6,
     },
     latitude: {
-        type: Number
+        type: String
     },
     longitude: {
-        type: Number
+        type: String
     },
     picture: {
         type: String,
