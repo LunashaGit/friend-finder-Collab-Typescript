@@ -3,40 +3,23 @@ import React, { useState } from "react";
 import SignInForm from "./SignInForm";
 
 const SignUpForm = () => {
-  const [formSubmit, setFormSubmit] = useState(false);
-    const [pseudo, setPseudo] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [adresse, setAdresse] = useState("");
-    const [latitude, setLatitude] = useState("");
-    const [longitude, setLongitude] = useState("");
-    const [password, setPassword] = useState("");
-    const [controlPassword, setControlPassword] = useState("");
-
-    const geoPos = () => {
-      const params = {
-        access_key: process.env.REACT_APP_API_POSITIONSTACK_TOKEN,
-        query: { adresse },
-        country: 'BE',
-      }
-      axios.get('http://api.positionstack.com/v1/forward', {params})
-          .then(response => {
-            console.log(response.data);
-            setLatitude(response.data.data[0].latitude);
-            setLongitude(response.data.data[0].longitude);
-            console.log(response.data.data[0].latitude);
-            
-          }).catch(error => {
-            console.log(error);
-          });
-    }
+  const [formSubmit, setFormSubmit] = useState<boolean>(false);
+  const [pseudo, setPseudo] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [adresse, setAdresse] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [controlPassword, setControlPassword] = useState<string>();
+  const params = {
+    access_key: process.env.REACT_APP_API_POSITIONSTACK_TOKEN,
+    query: { adresse },
+    country: "BE",
+  };
 
   const handleRegister = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    geoPos();
-    console.log(latitude);
-    
+
     const terms = document.getElementById("terms") as HTMLInputElement;
     const pseudoError = document.querySelector(".pseudo.error")!;
     const emailError = document.querySelector(".email.error")!;
@@ -49,7 +32,6 @@ const SignUpForm = () => {
     passwordConfirmError.innerHTML = "";
     termsError.innerHTML = "";
 
-    
     if (password !== controlPassword || !terms.checked) {
       if (password !== controlPassword) {
         passwordConfirmError.innerHTML =
@@ -58,27 +40,39 @@ const SignUpForm = () => {
       if (!terms.checked) {
         termsError.innerHTML = "veuillez valider les conditions generales";
       }
-      if (Object.keys(latitude).length) {
-        console.log("erreur geoloc");
-      }
     } else {
+      await axios
+        .get("http://api.positionstack.com/v1/forward", { params })
+        .then((response) => {
+          // console.log(
+          //   `Données reçues : Latitude =${response.data.data[0].latitude} & Longitude =${response.data.data[0].longitude}`
+          // );
 
-      await axios({
-        method: "post",
-        url: `${process.env.REACT_APP_API_URL}api/user/register`,
-        data: {
-          pseudo, firstName, lastName, adresse, latitude, longitude, email, password
-        },
-      })
-        .then((res) => {
-          setFormSubmit(true);
-          console.log(latitude);
-          
+          axios({
+            method: "post",
+            url: `${process.env.REACT_APP_API_URL}api/user/register`,
+            data: {
+              pseudo,
+              firstName,
+              lastName,
+              adresse,
+              latitude: response.data.data[0].latitude,
+              longitude: response.data.data[0].longitude,
+              email,
+              password,
+            },
+          })
+            .then((res) => {
+              setFormSubmit(true);
+            })
+            .catch((err) => {
+              pseudoError.innerHTML = err.response.data.errors.pseudo;
+              emailError.innerHTML = err.response.data.errors.email;
+              passwordError.innerHTML = err.response.data.errors.password;
+            });
         })
-        .catch((err) => {
-          pseudoError.innerHTML = err.response.data.errors.pseudo;
-          emailError.innerHTML = err.response.data.errors.email;
-          passwordError.innerHTML = err.response.data.errors.password;
+        .catch((error) => {
+          console.log(error);
         });
     }
   };
