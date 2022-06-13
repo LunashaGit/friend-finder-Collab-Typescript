@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const userData = useSelector((state: any) => state.userReducer);
-  const [latitude, setLatitude] = useState<number>(49.716167);
-  const [longitude, setLongitude] = useState<number>(5.561081);
+  const [latitude, setLatitude] = useState<number>();
+  const [longitude, setLongitude] = useState<number>();
 
   useEffect(() => {
     if (Object.keys(userData).length) {

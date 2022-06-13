@@ -9,8 +9,8 @@ const react_redux_1 = require("react-redux");
 const react_1 = require("react");
 const Home = () => {
     const userData = (0, react_redux_1.useSelector)((state) => state.userReducer);
-    const [latitude, setLatitude] = (0, react_1.useState)(49.716167);
-    const [longitude, setLongitude] = (0, react_1.useState)(5.561081);
+    const [latitude, setLatitude] = (0, react_1.useState)();
+    const [longitude, setLongitude] = (0, react_1.useState)();
     (0, react_1.useEffect)(() => {
         if (Object.keys(userData).length) {
             setLatitude(userData.latitude);
