@@ -4,13 +4,37 @@ import SignInForm from "./SignInForm";
 
 const SignUpForm = () => {
   const [formSubmit, setFormSubmit] = useState(false);
-  const [pseudo, setPseudo] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [controlPassword, setControlPassword] = useState("");
+    const [pseudo, setPseudo] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [adresse, setAdresse] = useState("");
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
+    const [password, setPassword] = useState("");
+    const [controlPassword, setControlPassword] = useState("");
+
+    const geoPos = () => {
+      const params = {
+        access_key: process.env.REACT_APP_API_POSITIONSTACK_TOKEN,
+        query: { adresse },
+        country: 'BE',
+      }
+      axios.get('http://api.positionstack.com/v1/forward', {params})
+          .then(response => {
+            console.log(response.data);
+            setLatitude(response.data.data[0].latitude);
+            setLongitude(response.data.data[0].longitude);
+            console.log(response.data.data[0].latitude);
+            
+          }).catch(error => {
+            console.log(error);
+          });
+    }
 
   const handleRegister = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
+    geoPos();
     const terms = document.getElementById("terms") as HTMLInputElement;
     const pseudoError = document.querySelector(".pseudo.error")!;
     const emailError = document.querySelector(".email.error")!;
@@ -23,6 +47,7 @@ const SignUpForm = () => {
     passwordConfirmError.innerHTML = "";
     termsError.innerHTML = "";
 
+    
     if (password !== controlPassword || !terms.checked) {
       if (password !== controlPassword) {
         passwordConfirmError.innerHTML =
@@ -31,14 +56,16 @@ const SignUpForm = () => {
       if (!terms.checked) {
         termsError.innerHTML = "veuillez valider les conditions generales";
       }
+      if (!Object.keys(latitude).length) {
+        console.log("erreur geoloc");
+      }
     } else {
+
       await axios({
         method: "post",
         url: `${process.env.REACT_APP_API_URL}api/user/register`,
         data: {
-          pseudo,
-          email,
-          password,
+          pseudo, firstName, lastName, adresse, latitude, longitude, email, password
         },
       })
         .then((res) => {
@@ -71,6 +98,39 @@ const SignUpForm = () => {
             id="pseudo"
             onChange={(e) => setPseudo(e.target.value)}
             value={pseudo}
+          />
+          <div className="pseudo error"></div>
+          <br />
+          <label htmlFor="firstName">Prénom</label>
+          <br />
+          <input
+            type="text"
+            name="firstName"
+            id="firstName"
+            onChange={(e) => setFirstName(e.target.value)}
+            value={firstName}
+          />
+          <div className="pseudo error"></div>
+          <br />
+          <label htmlFor="lastName">Nom</label>
+          <br />
+          <input
+            type="text"
+            name="lastName"
+            id="lastName"
+            onChange={(e) => setLastName(e.target.value)}
+            value={lastName}
+          />
+          <div className="pseudo error"></div>
+          <br />
+          <label htmlFor="adresse">Adresse</label>
+          <br />
+          <input
+            type="text"
+            name="adresse"
+            id="adresse"
+            onChange={(e) => setAdresse(e.target.value)}
+            value={adresse}
           />
           <div className="pseudo error"></div>
           <br />

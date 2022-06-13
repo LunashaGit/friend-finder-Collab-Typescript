@@ -4,13 +4,18 @@ import bcrypt from "bcrypt";
 
 interface IUser {
   pseudo: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  adresse: string;
+  latitude: number;
+  longitude: number;
   password: string;
   picture: string;
   bio: string;
-  followers: [string];
-  following: [string];
-  likes: [string];
+  friends: [string];
+  hobbies: [string];
+  isAdmin: boolean;
 }
 
 interface IUserDocument extends IUser, Document {}
@@ -29,6 +34,16 @@ const userSchema: Schema<IUserDocument> = new Schema(
       unique: true,
       trim: true,
     },
+    firstName: {
+      type: String,
+      minlength: 2,
+      maxlength: 55,
+  },
+  lastName: {
+      type: String,
+      minlength: 2,
+      maxlength: 55,
+  },
     email: {
       type: String,
       required: true,
@@ -37,12 +52,26 @@ const userSchema: Schema<IUserDocument> = new Schema(
       unique: true,
       trim: true,
     },
+    adresse: {
+      type: String,
+      required: true,
+      minlength: 10,
+      maxlength: 120,   
+  },
     password: {
       type: String,
       required: true,
       max: 1024,
       minlength: 6,
     },
+    latitude :{
+      type : Number
+    },
+    longitude :{
+      type : Number
+    }, 
+          
+  
     picture: {
       type: String,
       default: "./uploads/profil/random-user.png",
@@ -51,14 +80,15 @@ const userSchema: Schema<IUserDocument> = new Schema(
       type: String,
       max: 1024,
     },
-    followers: {
+    friends: {
       type: [String],
     },
-    following: {
+    hobbies: {
       type: [String],
     },
-    likes: {
-      type: [String],
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
   },
   {

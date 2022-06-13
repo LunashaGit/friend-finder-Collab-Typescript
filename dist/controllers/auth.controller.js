@@ -23,9 +23,9 @@ const createToken = (id) => {
     });
 };
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { pseudo, email, password } = req.body;
+    const { pseudo, firstName, lastName, adresse, latitude, longitude, email, password } = req.body;
     try {
-        const user = yield user_model_1.default.create({ pseudo, email, password });
+        const user = yield user_model_1.default.create({ pseudo, firstName, lastName, adresse, latitude, longitude, email, password });
         res.status(201).send({ user: user._id });
     }
     catch (err) {

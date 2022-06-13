@@ -19,11 +19,33 @@ const SignInForm_1 = __importDefault(require("./SignInForm"));
 const SignUpForm = () => {
     const [formSubmit, setFormSubmit] = (0, react_1.useState)(false);
     const [pseudo, setPseudo] = (0, react_1.useState)("");
+    const [firstName, setFirstName] = (0, react_1.useState)("");
+    const [lastName, setLastName] = (0, react_1.useState)("");
     const [email, setEmail] = (0, react_1.useState)("");
+    const [adresse, setAdresse] = (0, react_1.useState)("");
+    const [latitude, setLatitude] = (0, react_1.useState)("");
+    const [longitude, setLongitude] = (0, react_1.useState)("");
     const [password, setPassword] = (0, react_1.useState)("");
     const [controlPassword, setControlPassword] = (0, react_1.useState)("");
+    const geoPos = () => {
+        const params = {
+            access_key: process.env.REACT_APP_API_POSITIONSTACK_TOKEN,
+            query: { adresse },
+            country: 'BE',
+        };
+        axios_1.default.get('http://api.positionstack.com/v1/forward', { params })
+            .then(response => {
+            console.log(response.data);
+            setLatitude(response.data.data[0].latitude);
+            setLongitude(response.data.data[0].longitude);
+            console.log(response.data.data[0].latitude);
+        }).catch(error => {
+            console.log(error);
+        });
+    };
     const handleRegister = (e) => __awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
+        geoPos();
         const terms = document.getElementById("terms");
         const pseudoError = document.querySelector(".pseudo.error");
         const emailError = document.querySelector(".email.error");
@@ -40,15 +62,16 @@ const SignUpForm = () => {
             if (!terms.checked) {
                 termsError.innerHTML = "veuillez valider les conditions generales";
             }
+            if (!Object.keys(latitude).length) {
+                console.log("erreur geoloc");
+            }
         }
         else {
             yield (0, axios_1.default)({
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}api/user/register`,
                 data: {
-                    pseudo,
-                    email,
-                    password,
+                    pseudo, firstName, lastName, adresse, latitude, longitude, email, password
                 },
             })
                 .then((res) => {
@@ -61,7 +84,7 @@ const SignUpForm = () => {
             });
         }
     });
-    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: formSubmit ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(SignInForm_1.default, {}), (0, jsx_runtime_1.jsx)("span", {}), (0, jsx_runtime_1.jsx)("h4", Object.assign({ className: "success" }, { children: "Enregistrement reussi, veuillez vous connecter" }))] })) : ((0, jsx_runtime_1.jsxs)("form", Object.assign({ action: "", onSubmit: handleRegister, id: "sign-up-form" }, { children: [(0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "pseudo" }, { children: "Pseudo" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "pseudo", id: "pseudo", onChange: (e) => setPseudo(e.target.value), value: pseudo }), (0, jsx_runtime_1.jsx)("div", { className: "pseudo error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "email" }, { children: "Email" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "email", id: "email", onChange: (e) => setEmail(e.target.value), value: email }), (0, jsx_runtime_1.jsx)("div", { className: "email error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "password" }, { children: "Password" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "password", name: "password", id: "password", onChange: (e) => setPassword(e.target.value), value: password }), (0, jsx_runtime_1.jsx)("div", { className: "password error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "password-conf" }, { children: "Control Password" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "password", name: "password-conf", id: "password-conf", onChange: (e) => setControlPassword(e.target.value), value: controlPassword }), (0, jsx_runtime_1.jsx)("div", { className: "password-confirm error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "checkbox", id: "terms" }), (0, jsx_runtime_1.jsxs)("label", Object.assign({ htmlFor: "terms" }, { children: ["I accept terms", " ", (0, jsx_runtime_1.jsx)("a", Object.assign({ href: "/", target: "_blank", rel: "noopener noreferrer" }, { children: "GCD" }))] })), (0, jsx_runtime_1.jsx)("div", { className: "terms error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "submit", value: "Valider inscription" })] }))) }));
+    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: formSubmit ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(SignInForm_1.default, {}), (0, jsx_runtime_1.jsx)("span", {}), (0, jsx_runtime_1.jsx)("h4", Object.assign({ className: "success" }, { children: "Enregistrement reussi, veuillez vous connecter" }))] })) : ((0, jsx_runtime_1.jsxs)("form", Object.assign({ action: "", onSubmit: handleRegister, id: "sign-up-form" }, { children: [(0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "pseudo" }, { children: "Pseudo" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "pseudo", id: "pseudo", onChange: (e) => setPseudo(e.target.value), value: pseudo }), (0, jsx_runtime_1.jsx)("div", { className: "pseudo error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "firstName" }, { children: "Pr\u00E9nom" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "firstName", id: "firstName", onChange: (e) => setFirstName(e.target.value), value: firstName }), (0, jsx_runtime_1.jsx)("div", { className: "pseudo error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "lastName" }, { children: "Nom" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "lastName", id: "lastName", onChange: (e) => setLastName(e.target.value), value: lastName }), (0, jsx_runtime_1.jsx)("div", { className: "pseudo error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "adresse" }, { children: "Adresse" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "adresse", id: "adresse", onChange: (e) => setAdresse(e.target.value), value: adresse }), (0, jsx_runtime_1.jsx)("div", { className: "pseudo error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "email" }, { children: "Email" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "email", id: "email", onChange: (e) => setEmail(e.target.value), value: email }), (0, jsx_runtime_1.jsx)("div", { className: "email error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "password" }, { children: "Password" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "password", name: "password", id: "password", onChange: (e) => setPassword(e.target.value), value: password }), (0, jsx_runtime_1.jsx)("div", { className: "password error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("label", Object.assign({ htmlFor: "password-conf" }, { children: "Control Password" })), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "password", name: "password-conf", id: "password-conf", onChange: (e) => setControlPassword(e.target.value), value: controlPassword }), (0, jsx_runtime_1.jsx)("div", { className: "password-confirm error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "checkbox", id: "terms" }), (0, jsx_runtime_1.jsxs)("label", Object.assign({ htmlFor: "terms" }, { children: ["I accept terms", " ", (0, jsx_runtime_1.jsx)("a", Object.assign({ href: "/", target: "_blank", rel: "noopener noreferrer" }, { children: "GCD" }))] })), (0, jsx_runtime_1.jsx)("div", { className: "terms error" }), (0, jsx_runtime_1.jsx)("br", {}), (0, jsx_runtime_1.jsx)("input", { type: "submit", value: "Valider inscription" })] }))) }));
 };
 exports.default = SignUpForm;
 //# sourceMappingURL=SignUpForm.js.map

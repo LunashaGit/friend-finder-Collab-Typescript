@@ -47,6 +47,16 @@ const userSchema = new mongoose_1.Schema({
         unique: true,
         trim: true,
     },
+    firstName: {
+        type: String,
+        minlength: 2,
+        maxlength: 55,
+    },
+    lastName: {
+        type: String,
+        minlength: 2,
+        maxlength: 55,
+    },
     email: {
         type: String,
         required: true,
@@ -55,11 +65,23 @@ const userSchema = new mongoose_1.Schema({
         unique: true,
         trim: true,
     },
+    adresse: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 120,
+    },
     password: {
         type: String,
         required: true,
         max: 1024,
         minlength: 6,
+    },
+    latitude: {
+        type: Number
+    },
+    longitude: {
+        type: Number
     },
     picture: {
         type: String,
@@ -69,14 +91,15 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         max: 1024,
     },
-    followers: {
+    friends: {
         type: [String],
     },
-    following: {
+    hobbies: {
         type: [String],
     },
-    likes: {
-        type: [String],
+    isAdmin: {
+        type: Boolean,
+        default: false,
     },
 }, {
     timestamps: true,
