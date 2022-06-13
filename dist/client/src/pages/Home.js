@@ -6,9 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const Map_1 = __importDefault(require("../components/Mapping/Map"));
 const react_redux_1 = require("react-redux");
+const react_1 = require("react");
 const Home = () => {
     const userData = (0, react_redux_1.useSelector)((state) => state.userReducer);
-    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: Object.keys(userData).length && ((0, jsx_runtime_1.jsx)(Map_1.default, { latitude: userData.latitude, longitude: userData.longitude })) }) }));
+    const [latitude, setLatitude] = (0, react_1.useState)(49.716167);
+    const [longitude, setLongitude] = (0, react_1.useState)(5.561081);
+    (0, react_1.useEffect)(() => {
+        if (Object.keys(userData).length) {
+            setLatitude(userData.latitude);
+            setLongitude(userData.longitude);
+        }
+    }, [userData]);
+    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)(Map_1.default, { latitude: latitude, longitude: longitude }) }) }));
 };
 exports.default = Home;
 //# sourceMappingURL=Home.js.map

@@ -7,8 +7,6 @@ type mapProps = {
 };
 
 const Map = ({ latitude, longitude }: mapProps) => {
-  console.log(`lati = ${latitude} et long = ${longitude}`);
-
   let meIcon = L.icon({
     iconUrl: "../../img/street-view.png",
     iconSize: [50, 50], // size of the icon
@@ -16,23 +14,32 @@ const Map = ({ latitude, longitude }: mapProps) => {
     popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
   });
 
+  console.log(
+    `Données reçues : Latitude =${latitude} & Longitude =${longitude}`
+  );
+
   return (
-    <MapContainer
-      center={[latitude, longitude]}
-      zoom={16}
-      scrollWheelZoom={true}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={[latitude, longitude]} icon={meIcon}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <>
+      <MapContainer
+        center={[latitude, longitude]}
+        zoom={16}
+        scrollWheelZoom={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[latitude, longitude]} icon={meIcon}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </>
   );
 };
-
+// Map.defaultProps = {
+//   latitude: 49.716167,
+//   longitude: 5.561081,
+// };
 export default Map;
