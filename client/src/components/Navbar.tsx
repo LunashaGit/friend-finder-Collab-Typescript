@@ -15,7 +15,7 @@ const Navbar = () => {
           <NavLink to="/">
             <div className="logo">
               <img src="./img/icon.png" alt="icon" />
-              <h3>Geegam</h3>
+              <h3>Friends finder</h3>
             </div>
           </NavLink>
         </div>
