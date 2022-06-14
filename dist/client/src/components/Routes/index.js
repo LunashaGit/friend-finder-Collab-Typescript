@@ -9,8 +9,10 @@ const Home_1 = __importDefault(require("./../../pages/Home"));
 const Navbar_1 = __importDefault(require("../Navbar"));
 const profil_1 = __importDefault(require("./../../pages/profil"));
 const trending_1 = __importDefault(require("./../../pages/trending"));
+const signin_1 = __importDefault(require("../../pages/signin"));
+const signup_1 = __importDefault(require("../../pages/signup"));
 const index = () => {
-    return ((0, jsx_runtime_1.jsxs)(react_router_dom_1.BrowserRouter, { children: [(0, jsx_runtime_1.jsx)(Navbar_1.default, {}), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Routes, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/", element: (0, jsx_runtime_1.jsx)(Home_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/profil", element: (0, jsx_runtime_1.jsx)(profil_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/trending", element: (0, jsx_runtime_1.jsx)(trending_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "*", element: (0, jsx_runtime_1.jsx)(Home_1.default, {}) })] })] }));
+    return ((0, jsx_runtime_1.jsxs)(react_router_dom_1.BrowserRouter, { children: [(0, jsx_runtime_1.jsx)(Navbar_1.default, {}), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Routes, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/", element: (0, jsx_runtime_1.jsx)(Home_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/profil", element: (0, jsx_runtime_1.jsx)(profil_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/signin", element: (0, jsx_runtime_1.jsx)(signin_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/signup", element: (0, jsx_runtime_1.jsx)(signup_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/trending", element: (0, jsx_runtime_1.jsx)(trending_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "*", element: (0, jsx_runtime_1.jsx)(Home_1.default, {}) })] })] }));
 };
 exports.default = index;
 //# sourceMappingURL=index.js.map
