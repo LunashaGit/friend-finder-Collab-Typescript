@@ -7,7 +7,7 @@ const Profil = () => {
   const uid = useContext(UidContext);
 
   return (
-    <div className="profil-page">
+    <>
       {uid ? (
         <UpdateProfil />
       ) : (
@@ -18,7 +18,7 @@ const Profil = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
