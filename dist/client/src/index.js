@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const client_1 = __importDefault(require("react-dom/client"));
-require("./styles/index.scss");
+require("./style/index.css");
+require("./style/global.scss");
 const App_1 = __importDefault(require("./App"));
 const react_redux_1 = require("react-redux");
 const redux_devtools_extension_1 = require("redux-devtools-extension");

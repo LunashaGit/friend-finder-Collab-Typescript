@@ -1,43 +1,72 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import { UidContext } from "./AppContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserGroup, faGear } from "@fortawesome/free-solid-svg-icons";
+import { NavLink, useLocation } from "react-router-dom";
 import Logout from "./Log/Logout";
 
 const Navbar = () => {
   const uid = useContext(UidContext);
   const userData = useSelector((state: any) => state.userReducer);
+  const location = useLocation();
+
+  let navBg: string = "";
+  let navBtn: string = "";
+  let navLogo: string = "";
+
+  switch (location.pathname) {
+    case "/signin":
+      navBg = "relative";
+      navBtn = "hidden";
+      navLogo = "text-primary";
+      break;
+    case "/signup":
+      navBg = "relative";
+      navBtn = "hidden";
+      navLogo = "text-primary";
+      break;
+    default:
+      navBg = "bg-primary shadow-md absolute";
+      navBtn = "flex";
+      navLogo = "text-white";
+      break;
+  }
 
   return (
-    <nav>
-      <div className="nav-container">
-        <div className="logo">
-          <NavLink to="/">
-            <div className="logo">
-              <img src="./img/icon.png" alt="icon" />
-              <h3>Friends finder</h3>
-            </div>
-          </NavLink>
-        </div>
+    <nav className={`${navBg} w-screen`}>
+      <div className="max-w-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full mx-auto py-6 px-3 sm:px-0 flex items-start md:items-center justify-between text-white drop-shadow-md">
+        <NavLink to="/">
+          <h1 className={`text-2xl md:text-3xl ${navLogo}`}>
+            <FontAwesomeIcon icon={faUserGroup} /> Friend Finder
+          </h1>
+        </NavLink>
         {uid ? (
-          <ul>
-            <li></li>
-            <li className="welcome">
-              <NavLink to="/profil">
-                <h5>Bienvenue {userData.pseudo}</h5>
-              </NavLink>
-            </li>
+          <div>
+            <h3>hello {userData.pseudo}</h3>
             <Logout />
-          </ul>
+          </div>
         ) : (
-          <ul>
-            <li></li>
-            <li>
-              <NavLink to="/profil">
-                <img src="./img/icons/login.svg" alt="login" />
+          <div className={`grow ${navBtn} items-center justify-end`}>
+            <NavLink to="/profil">
+              <FontAwesomeIcon
+                icon={faGear}
+                className="flex md:hidden text-3xl hover:animate-spin cursor-pointer"
+              />
+            </NavLink>
+            <div className="w-52 hidden md:flex justify-between">
+              <NavLink to="/signin">
+                <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
+                  Sign in
+                </button>
               </NavLink>
-            </li>
-          </ul>
+              <NavLink to="/signup">
+                <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
+                  Sign up
+                </button>
+              </NavLink>
+            </div>
+          </div>
         )}
       </div>
     </nav>

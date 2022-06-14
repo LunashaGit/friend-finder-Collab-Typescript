@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
-import "./styles/index.scss";
+import "./style/index.css";
+import "./style/global.scss";
 import App from "./App";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
