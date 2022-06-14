@@ -1,7 +1,6 @@
 import Map from "../components/Mapping/Map";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Spotbar from "../components/Spotbar";
 
 const Home = () => {
   const userData = useSelector((state: any) => state.userReducer);
@@ -18,7 +17,6 @@ const Home = () => {
   return (
     <>
       <>
-        <Spotbar />
         <Map latitude={latitude} longitude={longitude} />
       </>
     </>

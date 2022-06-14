@@ -42,7 +42,10 @@ const Navbar = () => {
           </h1>
         </NavLink>
         {uid ? (
-          <div>
+          <div className="flex">
+            <NavLink to="/spots">
+                Spots
+            </NavLink>
             <h3>hello {userData.pseudo}</h3>
             <Logout />
           </div>
