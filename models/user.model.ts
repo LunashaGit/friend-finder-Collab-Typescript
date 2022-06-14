@@ -8,8 +8,8 @@ interface IUser {
   lastName: string;
   email: string;
   adresse: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   password: string;
   picture: string;
   bio: string;
@@ -65,10 +65,10 @@ const userSchema: Schema<IUserDocument> = new Schema(
       minlength: 6,
     },
     latitude :{
-      type : String
+      type : Number
     },
     longitude :{
-      type : String
+      type : Number
     }, 
           
   
