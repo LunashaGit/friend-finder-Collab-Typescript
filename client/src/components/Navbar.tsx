@@ -11,64 +11,57 @@ const Navbar = () => {
   const userData = useSelector((state: any) => state.userReducer);
   const location = useLocation();
 
-  let navBg: string = "";
   let navBtn: string = "";
-  let navLogo: string = "";
 
   switch (location.pathname) {
     case "/signin":
-      navBg = "relative";
       navBtn = "hidden";
-      navLogo = "text-primary";
       break;
     case "/signup":
-      navBg = "relative";
       navBtn = "hidden";
-      navLogo = "text-primary";
       break;
     default:
-      navBg = "bg-primary shadow-md absolute";
       navBtn = "flex";
-      navLogo = "text-white";
       break;
   }
 
   return (
-    <nav className={`${navBg} w-screen`}>
-      <div className="max-w-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full mx-auto py-6 px-3 sm:px-0 flex items-start md:items-center justify-between text-white drop-shadow-md">
-        <NavLink to="/">
-          <h1 className={`text-2xl md:text-3xl ${navLogo}`}>
-            <FontAwesomeIcon icon={faUserGroup} /> Friend Finder
-          </h1>
-        </NavLink>
-        {uid ? (
-          <div>
-            <h3>hello {userData.pseudo}</h3>
-            <Logout />
-          </div>
-        ) : (
-          <div className={`grow ${navBtn} items-center justify-end`}>
-            <NavLink to="/profil">
-              <FontAwesomeIcon
-                icon={faGear}
-                className="flex md:hidden text-3xl hover:animate-spin cursor-pointer"
-              />
+    <nav
+      className={`bg-primary shadow-md absolute left-2/4 -translate-x-2/4 w-screen z-10 max-w-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full mx-auto py-3 mt-6 px-6 flex items-start md:items-center justify-between text-white drop-shadow-md`}
+    >
+      <NavLink to="/">
+        <h1 className={`text-2xl md:text-3xl text-white`}>
+          <FontAwesomeIcon icon={faUserGroup} /> Friend Finder
+        </h1>
+      </NavLink>
+      {uid ? (
+        <div className="flex items-center">
+          <NavLink to="/spots">Spot</NavLink>
+          <h3>hello {userData.pseudo}</h3>
+          <Logout />
+        </div>
+      ) : (
+        <div className={`grow ${navBtn} items-center justify-end`}>
+          <NavLink to="/profil">
+            <FontAwesomeIcon
+              icon={faGear}
+              className="flex md:hidden text-3xl hover:animate-spin cursor-pointer"
+            />
+          </NavLink>
+          <div className="w-52 hidden md:flex justify-between">
+            <NavLink to="/signin">
+              <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
+                Sign in
+              </button>
             </NavLink>
-            <div className="w-52 hidden md:flex justify-between">
-              <NavLink to="/signin">
-                <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
-                  Sign in
-                </button>
-              </NavLink>
-              <NavLink to="/signup">
-                <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
-                  Sign up
-                </button>
-              </NavLink>
-            </div>
+            <NavLink to="/signup">
+              <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
+                Sign up
+              </button>
+            </NavLink>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 };
