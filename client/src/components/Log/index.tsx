@@ -1,6 +1,4 @@
 import { useState } from "react";
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
 
 type LogProps = {
   signin: boolean;
@@ -39,8 +37,6 @@ const Log = (props: LogProps) => {
             Se connecter
           </li>
         </ul>
-        {signUpModal && <SignUpForm />}
-        {signInModal && <SignInForm />}
       </div>
     </div>
   );
