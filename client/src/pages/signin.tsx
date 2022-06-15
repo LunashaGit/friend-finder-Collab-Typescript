@@ -11,7 +11,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Alert } from "@mui/material";
 
@@ -36,13 +36,34 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [email, setEmail] = useState<string | null>("");
+  const [password, setPassword] = useState<string>("");
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [remember, setRemember] = useState<boolean | null & boolean>(true);
+  
 
+  localStorage.setItem("remember", JSON.stringify(remember));
+  
+  useEffect(() => {
+    if(localStorage.getItem('email')){
+      setEmail(localStorage.getItem('email'));
+    }
+    if(localStorage.getItem('remember') ===  null){
+      setRemember(false)
+    }
+  }, [email, remember])
+
+  if(remember == false) {
+    localStorage.removeItem("email");
+  }
+  
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if(remember){
+      localStorage.setItem("email", email as string);
+    }
 
     axios({
       method: "post",
@@ -129,7 +150,7 @@ export default function SignInSide() {
                 autoComplete="current-password"
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value={remember} color="primary" onClick={() => setRemember(!remember)} checked={remember}  />}
                 label="Remember me"
               />
               <Button

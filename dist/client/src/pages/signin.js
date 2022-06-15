@@ -29,8 +29,24 @@ function SignInSide() {
     const [password, setPassword] = (0, react_1.useState)("");
     const [emailError, setEmailError] = (0, react_1.useState)(false);
     const [passwordError, setPasswordError] = (0, react_1.useState)(false);
+    const [remember, setRemember] = (0, react_1.useState)(true);
+    localStorage.setItem("remember", JSON.stringify(remember));
+    (0, react_1.useEffect)(() => {
+        if (localStorage.getItem('email')) {
+            setEmail(localStorage.getItem('email'));
+        }
+        if (localStorage.getItem('remember') === null) {
+            setRemember(false);
+        }
+    }, [email, remember]);
+    if (remember == false) {
+        localStorage.removeItem("email");
+    }
     const handleLogin = (e) => {
         e.preventDefault();
+        if (remember) {
+            localStorage.setItem("email", email);
+        }
         (0, axios_1.default)({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/user/login`,
@@ -58,7 +74,7 @@ function SignInSide() {
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
-                            } }, { children: [(0, jsx_runtime_1.jsx)(Avatar_1.default, Object.assign({ sx: { m: 1, bgcolor: "primary.main" } }, { children: (0, jsx_runtime_1.jsx)(LockOutlined_1.default, {}) })), (0, jsx_runtime_1.jsx)(Typography_1.default, Object.assign({ component: "h1", variant: "h5" }, { children: "Sign in" })), (0, jsx_runtime_1.jsxs)(Box_1.default, Object.assign({ component: "form", noValidate: true, onSubmit: handleLogin, sx: { mt: 1 } }, { children: [(0, jsx_runtime_1.jsx)(TextField_1.default, { margin: "normal", required: true, fullWidth: true, onChange: (e) => setEmail(e.target.value), value: email, id: "email", label: "Email Address", name: "email", autoComplete: "email", autoFocus: true }), (0, jsx_runtime_1.jsx)(TextField_1.default, { margin: "normal", required: true, fullWidth: true, name: "password", label: "Password", type: "password", id: "password", onChange: (e) => setPassword(e.target.value), value: password, autoComplete: "current-password" }), (0, jsx_runtime_1.jsx)(FormControlLabel_1.default, { control: (0, jsx_runtime_1.jsx)(Checkbox_1.default, { value: "remember", color: "primary" }), label: "Remember me" }), (0, jsx_runtime_1.jsx)(Button_1.default, Object.assign({ type: "submit", fullWidth: true, variant: "contained", sx: { mt: 3, mb: 2 } }, { children: "Sign In" })), (0, jsx_runtime_1.jsxs)(Grid_1.default, Object.assign({ container: true }, { children: [(0, jsx_runtime_1.jsx)(Grid_1.default, Object.assign({ item: true, xs: true }, { children: (0, jsx_runtime_1.jsx)(Link_1.default, Object.assign({ href: "#", variant: "body2" }, { children: "Forgot password?" })) })), (0, jsx_runtime_1.jsx)(Grid_1.default, Object.assign({ item: true }, { children: (0, jsx_runtime_1.jsx)(Link_1.default, Object.assign({ href: "/signup", variant: "body2" }, { children: "Don't have an account? Sign Up" })) }))] })), (0, jsx_runtime_1.jsx)(Copyright, { sx: { mt: 5 } })] }))] })) })), (0, jsx_runtime_1.jsx)(Grid_1.default, { item: true, xs: false, sm: 4, md: 7, sx: {
+                            } }, { children: [(0, jsx_runtime_1.jsx)(Avatar_1.default, Object.assign({ sx: { m: 1, bgcolor: "primary.main" } }, { children: (0, jsx_runtime_1.jsx)(LockOutlined_1.default, {}) })), (0, jsx_runtime_1.jsx)(Typography_1.default, Object.assign({ component: "h1", variant: "h5" }, { children: "Sign in" })), (0, jsx_runtime_1.jsxs)(Box_1.default, Object.assign({ component: "form", noValidate: true, onSubmit: handleLogin, sx: { mt: 1 } }, { children: [(0, jsx_runtime_1.jsx)(TextField_1.default, { margin: "normal", required: true, fullWidth: true, onChange: (e) => setEmail(e.target.value), value: email, id: "email", label: "Email Address", name: "email", autoComplete: "email", autoFocus: true }), (0, jsx_runtime_1.jsx)(TextField_1.default, { margin: "normal", required: true, fullWidth: true, name: "password", label: "Password", type: "password", id: "password", onChange: (e) => setPassword(e.target.value), value: password, autoComplete: "current-password" }), (0, jsx_runtime_1.jsx)(FormControlLabel_1.default, { control: (0, jsx_runtime_1.jsx)(Checkbox_1.default, { value: remember, color: "primary", onClick: () => setRemember(!remember), checked: remember }), label: "Remember me" }), (0, jsx_runtime_1.jsx)(Button_1.default, Object.assign({ type: "submit", fullWidth: true, variant: "contained", sx: { mt: 3, mb: 2 } }, { children: "Sign In" })), (0, jsx_runtime_1.jsxs)(Grid_1.default, Object.assign({ container: true }, { children: [(0, jsx_runtime_1.jsx)(Grid_1.default, Object.assign({ item: true, xs: true }, { children: (0, jsx_runtime_1.jsx)(Link_1.default, Object.assign({ href: "#", variant: "body2" }, { children: "Forgot password?" })) })), (0, jsx_runtime_1.jsx)(Grid_1.default, Object.assign({ item: true }, { children: (0, jsx_runtime_1.jsx)(Link_1.default, Object.assign({ href: "/signup", variant: "body2" }, { children: "Don't have an account? Sign Up" })) }))] })), (0, jsx_runtime_1.jsx)(Copyright, { sx: { mt: 5 } })] }))] })) })), (0, jsx_runtime_1.jsx)(Grid_1.default, { item: true, xs: false, sm: 4, md: 7, sx: {
                             backgroundImage: "url(https://source.unsplash.com/random)",
                             backgroundRepeat: "no-repeat",
                             backgroundColor: (t) => t.palette.mode === "light"
