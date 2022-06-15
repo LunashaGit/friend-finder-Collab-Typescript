@@ -1,7 +1,9 @@
+import Spot from "../components/Spot";
+
 const Spots = () => {
   return (
-    <div>
-      <h1>Spot page</h1>
+    <div className="pt-24 h-screen">
+      <Spot list={false} create={true} />
     </div>
   );
 };

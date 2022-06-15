@@ -1,6 +1,9 @@
 import { useState } from "react";
-import SignInForm from "./ListSpots";
-import SignUpForm from "./CreateSpot";
+import CreateSpot from "./CreateSpot";
+import ListSpots from "./ListSpots";
+
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 type SpotProps = {
   list: boolean;
@@ -15,7 +18,7 @@ const Spot = (props: SpotProps) => {
     if (e.currentTarget.id === "create") {
       setListSpotsModal(false);
       setCreateSpotModal(true);
-    } else if (e.currentTarget.id === "login") {
+    } else if (e.currentTarget.id === "list") {
       setListSpotsModal(true);
       setCreateSpotModal(false);
     }
@@ -23,24 +26,24 @@ const Spot = (props: SpotProps) => {
   return (
     <div className="connection-form">
       <div className="form-container">
-        <ul>
-          <li
-            onClick={handleModals}
-            id="create"
-            className={createSpotModal ? "active-btn" : ""}
-          >
-            Créer un spot
-          </li>
-          <li
-            onClick={handleModals}
-            id="list"
-            className={listSpotsModal ? "active-btn" : ""}
-          >
-            Voir ses spots
-          </li>
-        </ul>
-        {listSpotsModal && <SignUpForm />}
-        {createSpotModal && <SignInForm />}
+      <ButtonGroup variant="contained" aria-label="outlined primary button group">
+        <Button
+          onClick={handleModals}
+          id="create"
+          className={createSpotModal ? "active-btn" : ""}
+        >
+        Créer un spot
+        </Button>
+        <Button
+          onClick={handleModals}
+          id="list"
+          className={listSpotsModal ? "active-btn" : ""}
+        >
+        Voir ses spots
+        </Button>
+      </ButtonGroup>
+        {listSpotsModal && <ListSpots />}
+        {createSpotModal && <CreateSpot />}
       </div>
     </div>
   );

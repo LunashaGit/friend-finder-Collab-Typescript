@@ -52,7 +52,7 @@ const Map = ({ latitude, longitude }: mapProps) => {
   );
 };
 Map.defaultProps = {
-  latitude: 49.716167,
-  longitude: 5.561081,
+  latitude: 50.632744,
+  longitude: 5.586157,
 };
 export default Map;

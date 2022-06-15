@@ -1,19 +1,20 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 interface ISpot {
-    name : string;
+    spotName : string;
     latitude: string;
     longitude: string;
     hobbies: [string];
     description: string;
     creatorID: string;
+    userInterstedIn: [string];
 }
 
 interface ISpotDocument extends ISpot, Document {}
 
 const spotSchema: Schema<ISpotDocument> = new Schema(
     {
-        name: {
+        spotName: {
             type: String,
             required: true,
             minLength: 8,
@@ -38,7 +39,11 @@ const spotSchema: Schema<ISpotDocument> = new Schema(
           },
           creatorID: {
             type: String,
+          },
+          userInterstedIn: {
+            type : [String]
           }
+
     }
 );
 
