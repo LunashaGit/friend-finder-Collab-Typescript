@@ -59,4 +59,4 @@ router.post("/upload", upload.single("file"), uploadController.uploadProfil);
 router.post("/spots", spotController.getAllSposts);
 router.post("/spots/create", spotController.getAllSposts);
 exports.default = router;
-//# sourceMappingURL=user.routes.js.map
+//# sourceMappingURL=user.routes%20copy.js.map

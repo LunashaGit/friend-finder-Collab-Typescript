@@ -25,7 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const spotSchema = new mongoose_1.Schema({
-    name: {
+    spotName: {
         type: String,
         required: true,
         minLength: 8,
@@ -44,12 +44,14 @@ const spotSchema = new mongoose_1.Schema({
     },
     description: {
         type: String,
-        required: true,
         minLength: 8,
         maxLength: 512,
     },
     creatorID: {
         type: String,
+    },
+    userInterestedIn: {
+        type: [String],
     }
 });
 const SpotModel = mongoose_1.default.model("spot", spotSchema);

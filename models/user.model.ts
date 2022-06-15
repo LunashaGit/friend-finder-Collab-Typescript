@@ -8,8 +8,8 @@ interface IUser {
   lastName: string;
   email: string;
   adresse: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   password: string;
   picture: string;
   bio: string;
@@ -18,7 +18,7 @@ interface IUser {
   isAdmin: boolean;
 }
 
-interface IUserDocument extends IUser, Document {}
+interface IUserDocument extends IUser, Document { }
 
 interface IUserModel extends Model<IUserDocument> {
   login: (email: string, password: string) => Promise<IUserDocument>;
@@ -38,12 +38,12 @@ const userSchema: Schema<IUserDocument> = new Schema(
       type: String,
       minlength: 2,
       maxlength: 55,
-  },
-  lastName: {
+    },
+    lastName: {
       type: String,
       minlength: 2,
       maxlength: 55,
-  },
+    },
     email: {
       type: String,
       required: true,
@@ -56,22 +56,20 @@ const userSchema: Schema<IUserDocument> = new Schema(
       type: String,
       required: true,
       minlength: 10,
-      maxlength: 120,   
-  },
+      maxlength: 120,
+    },
     password: {
       type: String,
       required: true,
       max: 1024,
       minlength: 6,
     },
-    latitude :{
-      type : String
+    latitude: {
+      type: Number
     },
-    longitude :{
-      type : String
-    }, 
-          
-  
+    longitude: {
+      type: Number
+    },
     picture: {
       type: String,
       default: "./uploads/profil/random-user.png",
