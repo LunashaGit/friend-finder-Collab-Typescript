@@ -31,3 +31,18 @@ export const uploadErrors = (err: any) => {
     errors.maxSize = "Le fichier dépasse 500ko";
   return errors;
 };
+
+export const createPostErrors = (err: any) => {
+  let errors = { spotName: "", latitude: "", longitude: "", hobbies: "", description: "" };
+  if (err.message.includes("spotName"))
+    errors.spotName = "Nom du spot invalide";
+  if (err.message.includes("latitude"))
+    errors.latitude = "latitude invalide";
+    if (err.message.includes("longitude"))
+    errors.latitude = "longitude invalide";
+    if (err.message.includes("hobbies"))
+    errors.latitude = "Nom du hobbies invalide";
+    if (err.message.includes("description"))
+    errors.latitude = "description invalide";
+  return errors;
+};

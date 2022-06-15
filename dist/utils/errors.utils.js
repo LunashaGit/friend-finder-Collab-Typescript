@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadErrors = exports.signInErrors = exports.signUpErrors = void 0;
+exports.createPostErrors = exports.uploadErrors = exports.signInErrors = exports.signUpErrors = void 0;
 const signUpErrors = (err) => {
     let errors = { pseudo: "", email: "", password: "" };
     if (err.message.includes("pseudo"))
@@ -34,4 +34,19 @@ const uploadErrors = (err) => {
     return errors;
 };
 exports.uploadErrors = uploadErrors;
+const createPostErrors = (err) => {
+    let errors = { spotName: "", latitude: "", longitude: "", hobbies: "", description: "" };
+    if (err.message.includes("spotName"))
+        errors.spotName = "Nom du spot invalide";
+    if (err.message.includes("latitude"))
+        errors.latitude = "latitude invalide";
+    if (err.message.includes("longitude"))
+        errors.latitude = "longitude invalide";
+    if (err.message.includes("hobbies"))
+        errors.latitude = "Nom du hobbies invalide";
+    if (err.message.includes("description"))
+        errors.latitude = "description invalide";
+    return errors;
+};
+exports.createPostErrors = createPostErrors;
 //# sourceMappingURL=errors.utils.js.map
