@@ -16,6 +16,7 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const axios_1 = __importDefault(require("axios"));
 const react_1 = require("react");
 const react_redux_1 = require("react-redux");
+const spots_actions_1 = require("./actions/spots.actions");
 const user_actions_1 = require("./actions/user.actions");
 const AppContext_1 = require("./components/AppContext");
 const Routes_1 = __importDefault(require("./components/Routes"));
@@ -39,6 +40,7 @@ const App = () => {
         fetchToken();
         if (uid) {
             dispatch((0, user_actions_1.getUser)(uid));
+            dispatch((0, spots_actions_1.getSpots)());
         }
     }, [dispatch, uid]);
     return ((0, jsx_runtime_1.jsx)(AppContext_1.UidContext.Provider, Object.assign({ value: uid }, { children: (0, jsx_runtime_1.jsx)(Routes_1.default, {}) })));
