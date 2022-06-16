@@ -2,7 +2,6 @@ import * as rtr from "express";
 import * as authController from "./../controllers/auth.controller";
 import * as userController from "./../controllers/user.controller";
 import * as uploadController from "./../controllers/upload.controller";
-import * as spotController from "./../controllers/spot.controller";
 import multer from "multer";
 
 const router = rtr.Router();
@@ -32,10 +31,5 @@ router.patch("/unfollow/:id", userController.unfollow);
 //upload
 
 router.post("/upload", upload.single("file"), uploadController.uploadProfil);
-
-
-//spots
-router.post("/spots", spotController.getAllSposts);
-router.post("/spots/create", spotController.getAllSposts);
 
 export default router;

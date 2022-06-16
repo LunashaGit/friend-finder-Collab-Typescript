@@ -30,7 +30,6 @@ const rtr = __importStar(require("express"));
 const authController = __importStar(require("./../controllers/auth.controller"));
 const userController = __importStar(require("./../controllers/user.controller"));
 const uploadController = __importStar(require("./../controllers/upload.controller"));
-const spotController = __importStar(require("./../controllers/spot.controller"));
 const multer_1 = __importDefault(require("multer"));
 const router = rtr.Router();
 const storage = multer_1.default.diskStorage({
@@ -55,8 +54,5 @@ router.patch("/follow/:id", userController.follow);
 router.patch("/unfollow/:id", userController.unfollow);
 //upload
 router.post("/upload", upload.single("file"), uploadController.uploadProfil);
-//spots
-router.post("/spots", spotController.getAllSposts);
-router.post("/spots/create", spotController.getAllSposts);
 exports.default = router;
 //# sourceMappingURL=user.routes.js.map
