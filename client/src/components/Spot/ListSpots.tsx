@@ -2,8 +2,14 @@ import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import { useSelector } from "react-redux";
 
 const ListSpots = () => {
+  const spotsData = useSelector((state: any) => state.spotsReducer);
+  const spotData = useSelector((state: any) => state.spotReducer);
+
+  console.log(spotData)
+  console.log(spotsData)
     return (
         <div>
       <Grid container component="main" sx={{ height: "100%" }}>
@@ -30,6 +36,7 @@ const ListSpots = () => {
             </Box>
         </Grid>
       </Grid>
+      
     </div>
     );
 };
