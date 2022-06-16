@@ -9,14 +9,63 @@ export const getAllSposts = async (req: Request, res: Response) => {
 };
 
 export const createSpot = async (req: Request, res: Response) => {
-  const { spotName } = req.body;
+  const { spotName, latitude, longitude, hobbies, description, creatorID } = req.body;
 
-  console.log(req.body)
-  
   try {
-    const spots = await SpotModel.create({ spotName });
+    const spots = await SpotModel.create({ spotName, latitude, longitude, hobbies, description, creatorID });
     res.status(201).send({ spots: spots._id });
   } catch (err) {
-    res.status(400).send({ err });
+    const errors = createPostErrors(err);
+    res.status(400).send({ errors });
+  }
+};
+
+export const spotInfo = (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  SpotModel.findById(req.params.id, (err: string, docs: string) => {
+    !err ? res.status(200).send(docs) : res.status(400).send({ message: err });
+  }).select("-password");
+};
+
+export const updateSpot = async (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  try{
+    await SpotModel.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          spotName: req.body.spotName,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          description: req.body.description,
+        },
+      },
+      {
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true,
+      }
+    )
+      .then((docs) => {
+        res.send(docs);
+      })
+      .catch((err) => res.status(400).send({ message: err }));
+  }catch(err){
+    return res.status(400).send({ message: err });
+  }
+}
+
+export const deleteSpot = async (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+  try {
+    await SpotModel.deleteOne({ _id: req.params.id }).exec();
+    res.status(200).send({ message: "Successfully deleted. " });
+  } catch (err) {
+    return res.status(400).send({ message: err });
   }
 };
