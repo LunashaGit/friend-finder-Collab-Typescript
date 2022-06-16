@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { UidContext } from "./AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import Logout from "./Log/Logout";
 
 const Navbar = () => {
   const uid = useContext(UidContext);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const userData = useSelector((state: any) => state.userReducer);
   const location = useLocation();
 
@@ -25,6 +26,33 @@ const Navbar = () => {
       break;
   }
 
+  const roads: {
+    id: number;
+    name: string;
+    link: string;
+    icon?: JSX.Element;
+  }[] = [
+    {
+      id: 1,
+      name: "Sign In",
+      link: "/signin",
+    },
+    {
+      id: 2,
+      name: "Sign up",
+      link: "/signup",
+    },
+    {
+      id: 3,
+      name: "Profil",
+      link: "/profil",
+    },
+    {
+      id: 4,
+      name: "Spots",
+      link: "/spots",
+    },
+  ];
   return (
     <nav
       className={`bg-primary shadow-md absolute left-2/4 -translate-x-2/4 w-screen z-10 max-w-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full mx-auto py-3 mt-6 px-6 flex items-start md:items-center justify-between text-white drop-shadow-md`}
@@ -34,34 +62,67 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faUserGroup} /> Friend Finder
         </h1>
       </NavLink>
-      {uid ? (
-        <div className="flex items-center">
-          <NavLink to="/spots">Spot</NavLink>
-          <h3>hello {userData.pseudo}</h3>
-          <Logout />
-        </div>
-      ) : (
-        <div className={`grow ${navBtn} items-center justify-end`}>
-          <NavLink to="/profil">
-            <FontAwesomeIcon
-              icon={faGear}
-              className="flex md:hidden text-3xl hover:animate-spin cursor-pointer"
-            />
-          </NavLink>
-          <div className="w-52 hidden md:flex justify-between">
-            <NavLink to="/signin">
-              <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
-                Sign in
-              </button>
-            </NavLink>
-            <NavLink to="/signup">
-              <button className="border-2 px-3 py-1 text-lg rounded shadow-md font-bold">
-                Sign up
-              </button>
-            </NavLink>
-          </div>
-        </div>
-      )}
+
+      <div className={`grow ${navBtn} items-center justify-end`}>
+        <FontAwesomeIcon
+          icon={faGear}
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex md:hidden text-3xl hover:animate-spin cursor-pointer"
+        />
+
+        {uid ? (
+          <ul
+            className={`${
+              isOpen
+                ? "flex flex-col text-black absolute bg-white py-1.5 top-12 right-10 sm:relative sm:flex sm:flex-row sm:bg-transparent sm:top-0 sm:right-0 sm:text-white sm:justify-between sm:w-52"
+                : "hidden sm:relative sm:flex sm:justify-between"
+            }`}
+          >
+            <li className="text-xl px-3 py-1.5 flex flex-row">
+              <b className="hidden sm:contents">Hello</b> {userData.pseudo}
+            </li>
+            {roads
+              .filter(
+                (road) => road.link !== "/signin" && road.link !== "/signup"
+              )
+              .map((road) => {
+                return (
+                  <li key={road.id} className="text-xl px-3 py-1.5">
+                    <NavLink to={road.link} onClick={() => setIsOpen(false)}>
+                      {road.icon ? road.icon : road.name}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            <Logout />
+          </ul>
+        ) : (
+          <ul
+            className={`${
+              isOpen
+                ? "flex flex-col text-black absolute bg-white py-1.5 top-12 right-10 sm:relative sm:flex sm:flex-row sm:bg-transparent sm:top-0 sm:right-0 sm:text-white sm:justify-between sm:w-52"
+                : "hidden sm:relative sm:flex sm:justify-between sm:w-52"
+            }`}
+          >
+            {roads
+              .filter(
+                (road) => road.link === "/signin" || road.link === "/signup"
+              )
+              .map((road) => {
+                return (
+                  <li
+                    key={road.id}
+                    className="text-xl px-3 py-1.5 sm:border-2 sm:rounded sm:shadow-md sm:font-bold"
+                  >
+                    <NavLink to={road.link} onClick={() => setIsOpen(false)}>
+                      {road.name}
+                    </NavLink>
+                  </li>
+                );
+              })}
+          </ul>
+        )}
+      </div>
     </nav>
   );
 };

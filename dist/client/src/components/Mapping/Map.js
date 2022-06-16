@@ -21,8 +21,8 @@ const Map = ({ latitude, longitude }) => {
     return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsxs)(react_leaflet_1.MapContainer, Object.assign({ center: [latitude, longitude], zoom: 16, scrollWheelZoom: true }, { children: [(0, jsx_runtime_1.jsx)(ChangeView, { latitude: latitude, longitude: longitude, zoom: 16 }), (0, jsx_runtime_1.jsx)(react_leaflet_1.TileLayer, { attribution: '\u00A9 <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" }), (0, jsx_runtime_1.jsx)(react_leaflet_1.Marker, Object.assign({ position: [latitude, longitude], icon: meIcon }, { children: (0, jsx_runtime_1.jsxs)(react_leaflet_1.Popup, { children: ["A pretty CSS3 popup. ", (0, jsx_runtime_1.jsx)("br", {}), " Easily customizable."] }) }))] })) }));
 };
 Map.defaultProps = {
-    latitude: 49.716167,
-    longitude: 5.561081,
+    latitude: 50.632744,
+    longitude: 5.586157,
 };
 exports.default = Map;
 //# sourceMappingURL=Map.js.map

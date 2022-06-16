@@ -1,3 +1,5 @@
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import cookie from "js-cookie";
 
@@ -22,8 +24,8 @@ const Logout = () => {
     window.location.href = "/";
   };
   return (
-    <li onClick={logout}>
-      <img src="./img/icons/logout.svg" alt="logout" />
+    <li onClick={logout} className="text-xl px-3 py-1.5 sm:text-white">
+      <FontAwesomeIcon icon={faArrowRightFromBracket} />
     </li>
   );
 };
