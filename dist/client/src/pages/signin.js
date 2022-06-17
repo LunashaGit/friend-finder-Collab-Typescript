@@ -32,14 +32,14 @@ function SignInSide() {
     const [remember, setRemember] = (0, react_1.useState)(true);
     localStorage.setItem("remember", JSON.stringify(remember));
     (0, react_1.useEffect)(() => {
-        if (localStorage.getItem('email')) {
-            setEmail(localStorage.getItem('email'));
+        if (localStorage.getItem("email")) {
+            setEmail(localStorage.getItem("email"));
         }
-        if (localStorage.getItem('remember') === null) {
+        if (localStorage.getItem("remember") === null) {
             setRemember(false);
         }
     }, [email, remember]);
-    if (remember == false) {
+    if (remember === false) {
         localStorage.removeItem("email");
     }
     const handleLogin = (e) => {
