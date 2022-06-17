@@ -7,14 +7,19 @@ import Typography from "@mui/material/Typography";
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Link from "@mui/material/Link";
 import Checkbox from "@mui/material/Checkbox";
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import ListItemText from '@mui/material/ListItemText';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Alert } from "@mui/material";
 
 import axios from "axios";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
+import hobbiesList from "../../components/HobbiesList"
 
 const theme = createTheme();
 
@@ -25,12 +30,13 @@ export default function CreateSpot() {
   const [postal, setPostal] = useState<string>("");
   const [city, setCity] = useState<string>("");
   let adresse: string = `${num} ${street}, ${city} ${postal}`;
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [hobbies, setHobbies] = useState ([]);
-  const [description, setdescription] = useState ("");
-  const [creatorID, setCreatorID] = useState ("");
-
+  // const [latitude, setLatitude] = useState<number>(0);
+  // const [longitude, setLongitude] = useState<number>(0);
+  const latitude = 50.63;
+  const longitude = 5.70;
+  const [description, setDescription] = useState<string>("");
+  const creatorID  = useSelector((state: any) => state.userReducer)._id;
+  const [hobbies, setHobbies] = React.useState<string[]>([]);
   const [spotNameError, setSpotNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
@@ -40,27 +46,49 @@ export default function CreateSpot() {
     country: "BE",
   };
 
+  const handleChange = (event: SelectChangeEvent<typeof hobbies>) => {
+    const {
+      target: { value },
+    } = event;
+    setHobbies(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
   const addSpot = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(spotName, latitude, longitude, hobbies, description, creatorID);
+    
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/spot/create`,
       withCredentials: true,
       data: {
-        spotName, latitude, longitude, hobbies, description, creatorID
+        spotName, latitude, longitude, hobbies, description, creatorID   //hobbies string????
       },
     })
       .then((res) => {
         window.location.href = "/";
       })
       .catch((err) => {
-        err.response.data.errors.spotName
-          ? setSpotNameError(true)
-          : setSpotNameError(false);
-        err.response.data.errors.password
-          ? setPasswordError(true)
-          : setPasswordError(false);
+        // err.response.data.errors.spotName
+        //   ? setSpotNameError(true)
+        //   : setSpotNameError(false);
+        // err.response.data.errors.password
+        //   ? setPasswordError(true)
+        //   : setPasswordError(false);
       });
   };
   return (
@@ -111,7 +139,7 @@ export default function CreateSpot() {
                 sx={{ mt: 1 }}
               >
                 <Grid container spacing={1}>
-                  <Grid item xs={12}></Grid>
+                  <Grid item xs={12}>
                     <TextField
                       margin="normal"
                       required
@@ -177,15 +205,60 @@ export default function CreateSpot() {
                       value={city}
                     />
                   </Grid>
-                
-                    <Button
-                      type="submit"
+                  <Button
+                    type="button"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Géolocaliser mon spot
+                  </Button>
+                  <Grid item xs={12}>
+                    <Select
                       fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
+                      required
+                      label="hobbies"
+                      id="hobbies"
+                      name="hobbies"
+                      multiple
+                      value={hobbies}
+                      onChange={handleChange}
+                      input={<OutlinedInput label="Tag" />}
+                      renderValue={(selected) => selected.join(', ')}
+                      MenuProps={MenuProps}
                     >
-                      Créer mon spot
-                    </Button>
+                      {hobbiesList.map((name) => (
+                        <MenuItem key={name} value={name}>
+                          <Checkbox checked={hobbies.indexOf(name) > -1} />
+                          <ListItemText primary={name} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      onChange={(e) => setDescription(e.target.value)}
+                      value={description}
+                      id="description"
+                      label="Décrivez les activités disponibles"
+                      name="decription"
+                      autoComplete="description"
+                      autoFocus
+                    />
+                  </Grid>
+
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Créer mon spot
+                  </Button>
+                </Grid>
               </Box>
             </Box>
           </Grid>
