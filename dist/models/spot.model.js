@@ -34,16 +34,17 @@ const spotSchema = new mongoose_1.Schema({
         trim: true,
     },
     latitude: {
-        type: String
+        type: Number
     },
     longitude: {
-        type: String
+        type: Number
     },
     hobbies: {
         type: [String],
     },
     description: {
         type: String,
+        required: true,
         minLength: 8,
         maxLength: 512,
     },

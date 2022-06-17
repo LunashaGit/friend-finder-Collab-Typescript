@@ -2,8 +2,8 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 interface ISpot {
     spotName : string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     hobbies: [string];
     description: string;
     creatorID: string;
@@ -26,16 +26,17 @@ const spotSchema: Schema<ISpotDocument> = new Schema(
         trim: true,
       },
       latitude :{
-        type : String
+        type : Number
       },
       longitude :{
-        type : String
+        type : Number 
       },
       hobbies: {
         type: [String],
       },
       description: {
         type: String,
+        required: true,
         minLength: 8,
         maxLength: 512,
       },

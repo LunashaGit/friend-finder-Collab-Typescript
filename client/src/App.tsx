@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { getSpots } from "./actions/spots.actions";
 import { getUser } from "./actions/user.actions";
 import { UidContext } from "./components/AppContext";
 import Routes from "./components/Routes";
@@ -25,6 +26,7 @@ const App = () => {
     fetchToken();
     if (uid) {
       dispatch<any>(getUser(uid));
+      dispatch<any>(getSpots());
     }
   }, [dispatch, uid]);
   return (

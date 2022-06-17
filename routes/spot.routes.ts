@@ -7,8 +7,11 @@ const upload = multer();
 
 router.get("/", spotController.getAllSposts);
 router.post("/create", spotController.createSpot);
-/* router.put("/:id", postController.updatePost);
-router.delete("/:id", postController.deletePost);
+router.put("/update/:id", spotController.updateSpot);
+router.get("/:id", spotController.spotInfo);
+router.delete("/delete/:id", spotController.deleteSpot);
+
+/*router.delete("/:id", postController.deletePost);
 router.patch("/like-post/:id", postController.likePost);
 router.patch("/unlike-post/:id", postController.unlikePost); */
 
