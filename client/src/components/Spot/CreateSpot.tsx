@@ -35,7 +35,7 @@ export default function CreateSpot() {
   const latitude = 50.63;
   const longitude = 5.70;
   const [description, setDescription] = useState<string>("");
-  const creatorID  = useSelector((state: any) => state.userReducer).id;
+  const creatorID  = useSelector((state: any) => state.userReducer)._id;
   const [hobbies, setHobbies] = React.useState<string[]>([]);
   const [spotNameError, setSpotNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -69,7 +69,8 @@ export default function CreateSpot() {
 
   const addSpot = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(spotName, latitude, longitude, hobbies, description, creatorID);
+    
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/spot/create`,
