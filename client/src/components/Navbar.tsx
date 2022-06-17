@@ -55,7 +55,9 @@ const Navbar = () => {
   ];
   return (
     <nav
-      className={`bg-primary shadow-md absolute left-2/4 -translate-x-2/4 w-full z-10 max-w-[260px] ml-6 md:ml-0 md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full mx-auto py-3 mt-6 px-6 flex items-start md:items-center justify-between text-white drop-shadow-md`}
+      className={`bg-primary shadow-md left-2/4 -translate-x-2/4 w-full z-10 max-w-[260px] ml-6 md:ml-0 md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full mx-auto py-3 mt-6 px-6 flex items-start md:items-center justify-between text-white drop-shadow-md ${
+        location.pathname === "/profil" ? "fixed" : "absolute"
+      }`}
     >
       <NavLink to="/">
         <h1 className={`text-2xl md:text-3xl text-white`}>
