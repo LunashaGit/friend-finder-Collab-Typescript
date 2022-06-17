@@ -3,7 +3,7 @@ import CreateSpot from "./CreateSpot";
 import ListSpots from "./ListSpots";
 
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import Stack from '@mui/material/Stack';
 
 type SpotProps = {
   list: boolean;
@@ -26,7 +26,7 @@ const Spot = (props: SpotProps) => {
   return (
     <div className="connection-form">
       <div className="form-container">
-      <ButtonGroup variant="contained" aria-label="outlined primary button group">
+      <Stack spacing={2} direction="row">
         <Button
           onClick={handleModals}
           id="create"
@@ -41,7 +41,7 @@ const Spot = (props: SpotProps) => {
         >
         Voir ses spots
         </Button>
-      </ButtonGroup>
+      </Stack>
         {listSpotsModal && <ListSpots />}
         {createSpotModal && <CreateSpot />}
       </div>

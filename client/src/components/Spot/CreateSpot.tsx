@@ -18,6 +18,7 @@ import { Alert } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import Map from "../Mapping/Map";
 
 import hobbiesList from "../../components/HobbiesList"
 
@@ -30,10 +31,8 @@ export default function CreateSpot() {
   const [postal, setPostal] = useState<string>("");
   const [city, setCity] = useState<string>("");
   let adresse: string = `${num} ${street}, ${city} ${postal}`;
-  // const [latitude, setLatitude] = useState<number>(0);
-  // const [longitude, setLongitude] = useState<number>(0);
-  const latitude = 50.63;
-  const longitude = 5.70;
+  const [latitude, setLatitude] = useState<number>(0);
+  const [longitude, setLongitude] = useState<number>(0);
   const [description, setDescription] = useState<string>("");
   const creatorID  = useSelector((state: any) => state.userReducer)._id;
   const [hobbies, setHobbies] = React.useState<string[]>([]);
@@ -67,6 +66,20 @@ export default function CreateSpot() {
     },
   };
 
+  const geoLoc = async () => {
+    await axios
+    .get("http://api.positionstack.com/v1/forward", { params })
+    .then((response) => {
+      setLatitude(response.data.data[0].latitude);
+      setLongitude(response.data.data[0].longitude);
+    })
+    .catch((err) => {
+      console.log("can't found localisation");
+      
+    })
+    
+  }
+
   const addSpot = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(spotName, latitude, longitude, hobbies, description, creatorID);
@@ -76,7 +89,7 @@ export default function CreateSpot() {
       url: `${process.env.REACT_APP_API_URL}api/spot/create`,
       withCredentials: true,
       data: {
-        spotName, latitude, longitude, hobbies, description, creatorID   //hobbies string????
+        spotName, latitude, longitude, hobbies, description, creatorID
       },
     })
       .then((res) => {
@@ -93,7 +106,8 @@ export default function CreateSpot() {
   };
   return (
     <ThemeProvider theme={theme}>
-      <div className="pt-24 h-screen">
+      <CssBaseline />
+      <div className="pt-4 h-screen">
         {spotNameError && (
           <Alert severity="error" className="text-center">
             Oups ! this spot already exist !
@@ -106,13 +120,14 @@ export default function CreateSpot() {
           </Alert>
         )}
         <Grid container component="main" sx={{ height: "100%" }}>
-          <CssBaseline />
+          
 
           <Grid
             item
             xs={12}
-            sm={8}
-            md={5}
+             
+            md={8}
+            lg={6}
             component={Paper}
             elevation={6}
             square
@@ -207,6 +222,7 @@ export default function CreateSpot() {
                   </Grid>
                   <Button
                     type="button"
+                    onClick={geoLoc}
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
@@ -259,25 +275,33 @@ export default function CreateSpot() {
                     Créer mon spot
                   </Button>
                 </Grid>
+
               </Box>
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundImage: "url(https://source.unsplash.com/random)",
-              backgroundRepeat: "no-repeat",
-              backgroundColor: (t) =>
-                t.palette.mode === "light"
-                  ? t.palette.grey[50]
-                  : t.palette.grey[900],
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
+          {/* right side of page*/}
+          <Grid item xs={12} md={4} lg={6}>
+            <Grid container sx={{ height:"100%" }}>
+              <Grid item xs={12}
+                sx={{
+                  backgroundImage: "url(https://source.unsplash.com/random)",
+                  backgroundRepeat: "no-repeat",
+                  backgroundColor: (t) =>
+                    t.palette.mode === "light"
+                      ? t.palette.grey[50]
+                      : t.palette.grey[900],
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}/>
+              <Grid
+                item
+                xs={12}>
+                <Map latitude={latitude} longitude={longitude} />
+
+              </Grid>
+            </Grid>
+        </Grid>
+              {/* */}
         </Grid>
       </div>
     </ThemeProvider>
