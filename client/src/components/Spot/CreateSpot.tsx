@@ -31,8 +31,8 @@ export default function CreateSpot() {
   const [postal, setPostal] = useState<string>("");
   const [city, setCity] = useState<string>("");
   let adresse: string = `${num} ${street}, ${city} ${postal}`;
-  const [latitude, setLatitude] = useState<number>(0);
-  const [longitude, setLongitude] = useState<number>(0);
+  const [latitude, setLatitude] = useState<number>(useSelector((state: any) => state.userReducer.latitude));
+  const [longitude, setLongitude] = useState<number>(useSelector((state: any) => state.userReducer.longitude));
   const [description, setDescription] = useState<string>("");
   const creatorID  = useSelector((state: any) => state.userReducer)._id;
   const [hobbies, setHobbies] = React.useState<string[]>([]);
@@ -124,8 +124,7 @@ export default function CreateSpot() {
 
           <Grid
             item
-            xs={12}
-             
+            xs={12}          
             md={8}
             lg={6}
             component={Paper}
@@ -243,10 +242,10 @@ export default function CreateSpot() {
                       renderValue={(selected) => selected.join(', ')}
                       MenuProps={MenuProps}
                     >
-                      {hobbiesList.map((name) => (
-                        <MenuItem key={name} value={name}>
-                          <Checkbox checked={hobbies.indexOf(name) > -1} />
-                          <ListItemText primary={name} />
+                      {hobbiesList.map((item) => (
+                        <MenuItem key={item.name} value={item.name}>
+                          <Checkbox checked={hobbies.indexOf(item.name) > -1} />
+                          <ListItemText primary={item.name} />
                         </MenuItem>
                       ))}
                     </Select>
@@ -282,7 +281,8 @@ export default function CreateSpot() {
           {/* right side of page*/}
           <Grid item xs={12} md={4} lg={6}>
             <Grid container sx={{ height:"100%" }}>
-              <Grid item xs={12}
+              <Grid item xs={false} md={12}
+
                 sx={{
                   backgroundImage: "url(https://source.unsplash.com/random)",
                   backgroundRepeat: "no-repeat",

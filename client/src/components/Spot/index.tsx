@@ -4,6 +4,7 @@ import ListSpots from "./ListSpots";
 
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import { Grid } from "@mui/material";
 
 type SpotProps = {
   list: boolean;
@@ -24,28 +25,26 @@ const Spot = (props: SpotProps) => {
     }
   };
   return (
-    <div className="connection-form">
-      <div className="form-container">
-      <Stack spacing={2} direction="row">
-        <Button
-          onClick={handleModals}
-          id="create"
-          className={createSpotModal ? "active-btn" : ""}
-        >
-        Créer un spot
-        </Button>
-        <Button
-          onClick={handleModals}
-          id="list"
-          className={listSpotsModal ? "active-btn" : ""}
-        >
-        Voir ses spots
-        </Button>
-      </Stack>
+      <Grid >
+        <Stack spacing={2} direction="row" justifyContent="center">
+          <Button
+            onClick={handleModals}
+            id="create"
+            className={createSpotModal ? "active-btn" : ""}
+          >
+          Créer un spot
+          </Button>
+          <Button
+            onClick={handleModals}
+            id="list"
+            className={listSpotsModal ? "active-btn" : ""}
+          >
+          Voir ses spots
+          </Button>
+        </Stack>
         {listSpotsModal && <ListSpots />}
         {createSpotModal && <CreateSpot />}
-      </div>
-    </div>
+      </Grid>
   );
 };
 

@@ -44,7 +44,7 @@ const Map = ({ latitude, longitude }: mapProps) => {
         />
         <Marker position={[latitude, longitude]} icon={meIcon}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            Ici c'est ton domicile !
           </Popup>
         </Marker>
       </MapContainer>
