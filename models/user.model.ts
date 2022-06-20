@@ -13,11 +13,12 @@ interface IUser {
   password: string;
   picture: string;
   bio: string;
+  friendRequestSend: [string];
+  friendRequestReceived: [string];
   friends: [string];
   hobbies: [string];
   isAdmin: boolean;
   userInterestedIn: [string];
-
 }
 
 interface IUserDocument extends IUser, Document { }
@@ -79,6 +80,12 @@ const userSchema: Schema<IUserDocument> = new Schema(
     bio: {
       type: String,
       max: 1024,
+    },
+    friendRequestSend:{
+      type: [String],
+    },
+    friendRequestReceived:{
+      type: [String],
     },
     friends: {
       type: [String],
