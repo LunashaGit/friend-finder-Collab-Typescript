@@ -12,13 +12,8 @@ router.get("/:id", spotController.spotInfo);
 router.delete("/delete/:id", spotController.deleteSpot);
 router.patch("/participate/:id", spotController.InterestedPost);
 
-/*router.delete("/:id", postController.deletePost);
-router.patch("/like-post/:id", postController.likePost);
-router.patch("/unlike-post/:id", postController.unlikePost); */
-
-//comments
-/* router.patch("/comment-post/:id", postController.commentPost);
-router.patch("/edit-comment-post/:id", postController.editCommentPost);
-router.patch("/delete-comment-post/:id", postController.deleteCommentPost); */
+router.patch("/comment-spot/:id", spotController.commentPost);
+router.patch("/edit-comment-spot/:id", spotController.editCommentPost);
+router.delete("/delete-comment-spot/:id", spotController.deleteCommentPost);
 
 export default router;

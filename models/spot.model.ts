@@ -8,6 +8,7 @@ interface ISpot {
     description: string;
     creatorID: string;
     userInterestedIn: [string];
+    comments: [string];
 }
 
 interface ISpotDocument extends ISpot, Document { }
@@ -45,6 +46,17 @@ const spotSchema: Schema<ISpotDocument> = new Schema(
       },
       userInterestedIn: {
         type: [String],
+      },
+      comments: {
+        type: [
+          {
+            commenterId: String,
+            commenterPseudo: String,
+            text: String,
+            timestamp: Number,
+          },
+        ],
+        required: true,
       }
     }
 );
