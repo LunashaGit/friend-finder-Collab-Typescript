@@ -11,58 +11,23 @@ const react_fontawesome_1 = require("@fortawesome/react-fontawesome");
 const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 const react_router_dom_1 = require("react-router-dom");
 const Logout_1 = __importDefault(require("./Log/Logout"));
+const material_1 = require("@mui/material");
+const RouteData_1 = require("./Routes/RouteData");
 const Navbar = () => {
     const uid = (0, react_1.useContext)(AppContext_1.UidContext);
     const [isOpen, setIsOpen] = (0, react_1.useState)(false);
     const userData = (0, react_redux_1.useSelector)((state) => state.userReducer);
     const location = (0, react_router_dom_1.useLocation)();
-    let navBtn = "";
-    switch (location.pathname) {
-        case "/signin":
-            navBtn = "hidden";
-            break;
-        case "/signup":
-            navBtn = "hidden";
-            break;
-        default:
-            navBtn = "flex";
-            break;
-    }
-    const roads = [
-        {
-            id: 1,
-            name: "Sign In",
-            link: "/signin",
-        },
-        {
-            id: 2,
-            name: "Sign up",
-            link: "/signup",
-        },
-        {
-            id: 3,
-            name: "Profil",
-            link: "/profil",
-        },
-        {
-            id: 4,
-            name: "Spots",
-            link: "/spots",
-        },
-    ];
-    return ((0, jsx_runtime_1.jsxs)("nav", Object.assign({ className: `bg-primary shadow-md left-2/4 -translate-x-2/4 w-full z-10 max-w-[260px] ml-6 md:ml-0 md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full mx-auto py-3 mt-6 px-6 flex items-start md:items-center justify-between text-white drop-shadow-md ${location.pathname === "/profil" ? "fixed" : "absolute"}` }, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.NavLink, Object.assign({ to: "/" }, { children: (0, jsx_runtime_1.jsxs)("h1", Object.assign({ className: `text-2xl md:text-3xl text-white` }, { children: [(0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faUserGroup }), " Friend Finder"] })) })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: `grow ${navBtn} items-center justify-end` }, { children: [(0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faGear, onClick: () => setIsOpen(!isOpen), className: "flex md:hidden text-3xl hover:animate-spin cursor-pointer" }), uid ? ((0, jsx_runtime_1.jsxs)("ul", Object.assign({ className: `${isOpen
-                            ? "flex flex-col text-black absolute bg-white py-1.5 top-12 right-10 sm:relative sm:flex sm:flex-row sm:bg-transparent sm:top-0 sm:right-0 sm:text-white sm:justify-between sm:w-52"
-                            : "hidden sm:relative sm:flex sm:justify-between"}` }, { children: [(0, jsx_runtime_1.jsxs)("li", Object.assign({ className: "text-xl px-3 py-1.5 flex flex-row" }, { children: [(0, jsx_runtime_1.jsx)("b", Object.assign({ className: "hidden sm:contents" }, { children: "Hello" })), " ", userData.pseudo] })), roads
-                                .filter((road) => road.link !== "/signin" && road.link !== "/signup")
+    const roads = RouteData_1.RouteData;
+    return ((0, jsx_runtime_1.jsxs)("nav", Object.assign({ className: `bg-primary shadow-md left-2/4 -translate-x-2/4 w-full z-10 max-w-[260px] ml-6 md:ml-0 md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl mx-auto py-3 mt-6 px-6 flex items-center justify-between text-white drop-shadow-md ${location.pathname === "/profil" ? "fixed" : "absolute"}` }, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.NavLink, Object.assign({ to: "/" }, { children: (0, jsx_runtime_1.jsxs)("h1", Object.assign({ className: `text-xl md:text-3xl text-white` }, { children: [(0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faUserGroup }), " Friend Finder"] })) })), roads && ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: `grow flex items-center justify-end` }, { children: uid ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(material_1.Badge, Object.assign({ color: "secondary", overlap: "circular", badgeContent: " ", variant: "dot" }, { children: (0, jsx_runtime_1.jsx)(material_1.Avatar, { alt: "userPicture", src: userData.picture, className: "cursor-pointer", onClick: () => setIsOpen(!isOpen) }) })), isOpen && ((0, jsx_runtime_1.jsxs)("ul", Object.assign({ className: "absolute bg-white text-black w-60 right-12 top-12" }, { children: [roads
+                                    .filter((road) => road.show === "log")
+                                    .map((road) => {
+                                    return ((0, jsx_runtime_1.jsx)(react_router_dom_1.Link, Object.assign({ to: road.link }, { children: (0, jsx_runtime_1.jsxs)("li", Object.assign({ className: "text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer" }, { children: [(0, jsx_runtime_1.jsxs)("i", Object.assign({ className: "w-10 flex justify-center items-center text-primary" }, { children: [" ", road.icon, " "] })), road.name] }), road.id) })));
+                                }), (0, jsx_runtime_1.jsx)(Logout_1.default, {})] })))] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faGear, onClick: () => setIsOpen(!isOpen), className: "text-3xl hover:animate-spin cursor-pointer" }), isOpen && ((0, jsx_runtime_1.jsx)("ul", Object.assign({ className: "absolute bg-white text-black w-60 right-12 top-12" }, { children: roads
+                                .filter((road) => road.show === "noLog")
                                 .map((road) => {
-                                return ((0, jsx_runtime_1.jsx)("li", Object.assign({ className: "text-xl px-3 py-1.5" }, { children: (0, jsx_runtime_1.jsx)(react_router_dom_1.NavLink, Object.assign({ to: road.link, onClick: () => setIsOpen(false) }, { children: road.icon ? road.icon : road.name })) }), road.id));
-                            }), (0, jsx_runtime_1.jsx)(Logout_1.default, {})] }))) : ((0, jsx_runtime_1.jsx)("ul", Object.assign({ className: `${isOpen
-                            ? "flex flex-col text-black absolute bg-white py-1.5 top-12 right-10 sm:relative sm:flex sm:flex-row sm:bg-transparent sm:top-0 sm:right-0 sm:text-white sm:justify-between sm:w-52"
-                            : "hidden sm:relative sm:flex sm:justify-between sm:w-52"}` }, { children: roads
-                            .filter((road) => road.link === "/signin" || road.link === "/signup")
-                            .map((road) => {
-                            return ((0, jsx_runtime_1.jsx)("li", Object.assign({ className: "text-xl px-3 py-1.5 sm:border-2 sm:rounded sm:shadow-md sm:font-bold" }, { children: (0, jsx_runtime_1.jsx)(react_router_dom_1.NavLink, Object.assign({ to: road.link, onClick: () => setIsOpen(false) }, { children: road.name })) }), road.id));
-                        }) })))] }))] })));
+                                return ((0, jsx_runtime_1.jsx)(react_router_dom_1.Link, Object.assign({ to: road.link }, { children: (0, jsx_runtime_1.jsxs)("li", Object.assign({ className: "text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer" }, { children: [(0, jsx_runtime_1.jsxs)("i", Object.assign({ className: "w-10 flex justify-center items-center text-primary" }, { children: [" ", road.icon, " "] })), road.name] }), road.id) })));
+                            }) })))] })) })))] })));
 };
 exports.default = Navbar;
 //# sourceMappingURL=Navbar.js.map

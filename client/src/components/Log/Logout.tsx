@@ -24,8 +24,14 @@ const Logout = () => {
     window.location.href = "/";
   };
   return (
-    <li onClick={logout} className="text-xl px-3 py-1.5 sm:text-white">
-      <FontAwesomeIcon icon={faArrowRightFromBracket} />
+    <li
+      onClick={logout}
+      className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer"
+    >
+      <i className="w-10 flex justify-center items-center text-primary">
+        <FontAwesomeIcon icon={faArrowRightFromBracket} />
+      </i>{" "}
+      Logout
     </li>
   );
 };

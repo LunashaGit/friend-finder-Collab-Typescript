@@ -37,7 +37,7 @@ const Logout = () => {
         });
         window.location.href = "/";
     });
-    return ((0, jsx_runtime_1.jsx)("li", Object.assign({ onClick: logout, className: "text-xl px-3 py-1.5 sm:text-white" }, { children: (0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faArrowRightFromBracket }) })));
+    return ((0, jsx_runtime_1.jsxs)("li", Object.assign({ onClick: logout, className: "text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer" }, { children: [(0, jsx_runtime_1.jsx)("i", Object.assign({ className: "w-10 flex justify-center items-center text-primary" }, { children: (0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faArrowRightFromBracket }) })), " ", "Logout"] })));
 };
 exports.default = Logout;
 //# sourceMappingURL=Logout.js.map

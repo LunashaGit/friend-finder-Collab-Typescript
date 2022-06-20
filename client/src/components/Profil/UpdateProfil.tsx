@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateBio } from "../../actions/user.actions";
 import { dateParser } from "../Utils";
 import FollowHandler from "./FollowHandler";
-import UploadImg from "./UploadImg";
 
 const UpdateProfil = () => {
   const [bio, setBio] = useState("");
@@ -26,7 +25,6 @@ const UpdateProfil = () => {
         <div className="left-part">
           <h3>Photo de profil</h3>
           <img src={userData.picture} alt="user-pic" />
-          <UploadImg />
         </div>
         <div className="right-part">
           <div className="bio-update">

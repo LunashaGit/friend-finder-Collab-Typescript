@@ -280,6 +280,25 @@ export default function CreateSpot() {
           />
         </Grid>
       </div>
+
+
+      <Grid container>
+            <Grid item xs={12} sm={8} md={6}>
+              <Grid container>
+                Formulaire
+              </Grid>
+            </Grid>
+            <Grid item xs={12} sm={4} md={6}>
+              <Grid container>
+                <Grid item xs={12} sm={12} md={6}>Photo</Grid>
+                <Grid item xs={12} sm={12} md={6}>Map</Grid>
+              </Grid>
+            </Grid>
+      </Grid>
+
+
+
+
     </ThemeProvider>
   );
 };
