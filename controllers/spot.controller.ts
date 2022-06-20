@@ -78,14 +78,14 @@ export const InterestedPost = async (req: Request, res: Response) => {
     await SpotModel.findByIdAndUpdate(
       req.params.id,
       {
-        $addToSet: { userInterestedIn: req.params.idUser },
+        $addToSet: { userInterestedIn: req.body.id },
       },
       { new: true }
     )
       .then()
       .catch((err) => res.status(400).send({ message: err }));
     await UserModel.findByIdAndUpdate(
-      req.params.idUser,
+      req.body.id,
       {
         $addToSet: { userInterestedIn: req.params.id },
       },

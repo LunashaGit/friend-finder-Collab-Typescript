@@ -85,11 +85,11 @@ const InterestedPost = (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(400).send("ID unknown : " + req.params.id);
     try {
         yield spot_model_1.default.findByIdAndUpdate(req.params.id, {
-            $addToSet: { userInterestedIn: req.params.idUser },
+            $addToSet: { userInterestedIn: req.body.id },
         }, { new: true })
             .then()
             .catch((err) => res.status(400).send({ message: err }));
-        yield user_model_1.default.findByIdAndUpdate(req.params.idUser, {
+        yield user_model_1.default.findByIdAndUpdate(req.body.id, {
             $addToSet: { userInterestedIn: req.params.id },
         }, { new: true })
             .then((docs) => res.status(201).json(docs))
