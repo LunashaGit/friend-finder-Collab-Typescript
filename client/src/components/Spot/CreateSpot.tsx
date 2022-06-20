@@ -20,7 +20,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Map from "../Mapping/Map";
 
-import hobbiesList from "../../components/HobbiesList"
+import {passions} from "../../components/HobbiesList"
 
 const theme = createTheme();
 
@@ -242,7 +242,7 @@ export default function CreateSpot() {
                       renderValue={(selected) => selected.join(', ')}
                       MenuProps={MenuProps}
                     >
-                      {hobbiesList.map((item) => (
+                      {passions.map((item) => (
                         <MenuItem key={item.name} value={item.name}>
                           <Checkbox checked={hobbies.indexOf(item.name) > -1} />
                           <ListItemText primary={item.name} />
