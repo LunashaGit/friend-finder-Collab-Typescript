@@ -16,9 +16,9 @@ const Home = () => {
 
   return (
     <>
-      <>
+      <div className="w-screen h-screen">
         <Map latitude={latitude} longitude={longitude} />
-      </>
+      </div>
     </>
   );
 };
