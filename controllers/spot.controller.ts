@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import SpotModel from "./../models/spot.model";
+import UserModel from "./../models/user.model";
 import { Types } from "mongoose";
 import { createPostErrors } from "./../utils/errors.utils";
 
@@ -67,5 +68,99 @@ export const deleteSpot = async (req: Request, res: Response) => {
     res.status(200).send({ message: "Successfully deleted. " });
   } catch (err) {
     return res.status(400).send({ message: err });
+  }
+};
+
+export const InterestedPost = async (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+  try {
+    await SpotModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { userInterestedIn: req.body.id },
+      },
+      { new: true }
+    )
+      .then()
+      .catch((err) => res.status(400).send({ message: err }));
+    await UserModel.findByIdAndUpdate(
+      req.body.id,
+      {
+        $addToSet: { userInterestedIn: req.params.id },
+      },
+      { new: true }
+    )
+      .then((docs) => res.status(201).json(docs))
+      .catch((err) => res.status(400).send({ message: err }));
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+}
+
+export const commentPost = (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+  try {
+    return SpotModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          comments: {
+            commenterId: req.body.commenterId,
+            commenterPseudo: req.body.commenterPseudo,
+            text: req.body.text,
+            timestamp: new Date().getTime(),
+          },
+        },
+      },
+      { new: true }
+    )
+      .then((docs) => res.status(201).send(docs))
+      .catch((err) => res.status(400).send({ message: err }));
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+
+export const editCommentPost = (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+  try {
+    return SpotModel.findById(req.params.id, (err: any, docs: any) => {
+      const theComment = docs.comments.find((comment: any) =>
+        comment._id.equals(req.body.commentId)
+      );
+      if (!theComment) return res.status(400).send("Comment not found");
+      theComment.text = req.body.text;
+
+      return docs.save((err: any) => {
+        if (!err) return res.status(200).send(docs);
+        return res.status(500).send(err);
+      });
+    });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+export const deleteCommentPost = (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+  try {
+    return SpotModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: {
+          comments: {
+            _id: req.body.commentId,
+          },
+        },
+      },
+      { new: true }
+    )
+      .then((docs) => res.status(201).send(docs))
+      .catch((err) => res.status(400).send({ message: err }));
+  } catch (err) {
+    return res.status(400).send(err);
   }
 };

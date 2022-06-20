@@ -53,6 +53,17 @@ const spotSchema = new mongoose_1.Schema({
     },
     userInterestedIn: {
         type: [String],
+    },
+    comments: {
+        type: [
+            {
+                commenterId: String,
+                commenterPseudo: String,
+                text: String,
+                timestamp: Number,
+            },
+        ],
+        required: true,
     }
 });
 const SpotModel = mongoose_1.default.model("spot", spotSchema);

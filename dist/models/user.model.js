@@ -91,6 +91,12 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         max: 1024,
     },
+    friendRequestSend: {
+        type: [String],
+    },
+    friendRequestReceived: {
+        type: [String],
+    },
     friends: {
         type: [String],
     },
@@ -101,6 +107,9 @@ const userSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    userInterestedIn: {
+        type: [String],
+    }
 }, {
     timestamps: true,
 });

@@ -13,9 +13,12 @@ interface IUser {
   password: string;
   picture: string;
   bio: string;
+  friendRequestSend: [string];
+  friendRequestReceived: [string];
   friends: [string];
   hobbies: [string];
   isAdmin: boolean;
+  userInterestedIn: [string];
 }
 
 interface IUserDocument extends IUser, Document { }
@@ -78,6 +81,12 @@ const userSchema: Schema<IUserDocument> = new Schema(
       type: String,
       max: 1024,
     },
+    friendRequestSend:{
+      type: [String],
+    },
+    friendRequestReceived:{
+      type: [String],
+    },
     friends: {
       type: [String],
     },
@@ -88,6 +97,9 @@ const userSchema: Schema<IUserDocument> = new Schema(
       type: Boolean,
       default: false,
     },
+    userInterestedIn: {
+      type: [String],
+    }
   },
   {
     timestamps: true,
