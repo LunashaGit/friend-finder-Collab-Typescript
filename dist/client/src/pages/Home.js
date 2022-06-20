@@ -17,7 +17,7 @@ const Home = () => {
             setLongitude(userData.longitude);
         }
     }, [userData]);
-    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)(Map_1.default, { latitude: latitude, longitude: longitude }) }) }));
+    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "w-screen h-screen" }, { children: (0, jsx_runtime_1.jsx)(Map_1.default, { latitude: latitude, longitude: longitude }) })) }));
 };
 exports.default = Home;
 //# sourceMappingURL=Home.js.map
