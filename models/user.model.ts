@@ -16,6 +16,8 @@ interface IUser {
   friends: [string];
   hobbies: [string];
   isAdmin: boolean;
+  userInterestedIn: [string];
+
 }
 
 interface IUserDocument extends IUser, Document { }
@@ -88,6 +90,9 @@ const userSchema: Schema<IUserDocument> = new Schema(
       type: Boolean,
       default: false,
     },
+    userInterestedIn: {
+      type: [String],
+    }
   },
   {
     timestamps: true,

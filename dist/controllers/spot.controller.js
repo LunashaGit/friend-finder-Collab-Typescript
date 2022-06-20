@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSpot = exports.updateSpot = exports.spotInfo = exports.createSpot = exports.getAllSposts = void 0;
+exports.InterestedPost = exports.deleteSpot = exports.updateSpot = exports.spotInfo = exports.createSpot = exports.getAllSposts = void 0;
 const spot_model_1 = __importDefault(require("./../models/spot.model"));
+const user_model_1 = __importDefault(require("./../models/user.model"));
 const mongoose_1 = require("mongoose");
 const errors_utils_1 = require("./../utils/errors.utils");
 const getAllSposts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -79,4 +80,24 @@ const deleteSpot = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteSpot = deleteSpot;
+const InterestedPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!mongoose_1.Types.ObjectId.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+    try {
+        yield spot_model_1.default.findByIdAndUpdate(req.params.id, {
+            $addToSet: { userInterestedIn: req.params.idUser },
+        }, { new: true })
+            .then()
+            .catch((err) => res.status(400).send({ message: err }));
+        yield user_model_1.default.findByIdAndUpdate(req.params.idUser, {
+            $addToSet: { userInterestedIn: req.params.id },
+        }, { new: true })
+            .then((docs) => res.status(201).json(docs))
+            .catch((err) => res.status(400).send({ message: err }));
+    }
+    catch (err) {
+        return res.status(400).send(err);
+    }
+});
+exports.InterestedPost = InterestedPost;
 //# sourceMappingURL=spot.controller.js.map

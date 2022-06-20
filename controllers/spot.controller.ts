@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import SpotModel from "./../models/spot.model";
+import UserModel from "./../models/user.model";
 import { Types } from "mongoose";
 import { createPostErrors } from "./../utils/errors.utils";
 
@@ -69,3 +70,30 @@ export const deleteSpot = async (req: Request, res: Response) => {
     return res.status(400).send({ message: err });
   }
 };
+
+export const InterestedPost = async (req: Request, res: Response) => {
+  if (!Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+  try {
+    await SpotModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { userInterestedIn: req.params.idUser },
+      },
+      { new: true }
+    )
+      .then()
+      .catch((err) => res.status(400).send({ message: err }));
+    await UserModel.findByIdAndUpdate(
+      req.params.idUser,
+      {
+        $addToSet: { userInterestedIn: req.params.id },
+      },
+      { new: true }
+    )
+      .then((docs) => res.status(201).json(docs))
+      .catch((err) => res.status(400).send({ message: err }));
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+}

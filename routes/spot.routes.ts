@@ -10,6 +10,7 @@ router.post("/create", spotController.createSpot);
 router.put("/update/:id", spotController.updateSpot);
 router.get("/:id", spotController.spotInfo);
 router.delete("/delete/:id", spotController.deleteSpot);
+router.patch("/participate/:id/:idUser", spotController.InterestedPost);
 
 /*router.delete("/:id", postController.deletePost);
 router.patch("/like-post/:id", postController.likePost);
