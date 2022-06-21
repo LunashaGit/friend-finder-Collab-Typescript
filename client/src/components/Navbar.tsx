@@ -6,6 +6,8 @@ import {
   faUserGroup,
   faGear,
   faCaretLeft,
+  faV,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Logout from "./Log/Logout";
@@ -18,12 +20,14 @@ const Navbar = () => {
   const [isOpenBis, setIsOpenBis] = useState<boolean>(false);
   const [notif, setNotif] = useState<boolean>(true);
   const userData = useSelector((state: any) => state.userReducer);
+  const allUsersData = useSelector((state: any) => state.usersReducer);
   const location = useLocation();
   const roads = RouteData;
+  const boxNotifs: string[] = userData.friendRequestReceived;
 
   useEffect(() => {
-    userData.friendRequestReceived ? setNotif(false) : setNotif(true);
-  }, [notif, userData.friendRequestReceived]);
+    boxNotifs ? setNotif(false) : setNotif(true);
+  }, [notif, boxNotifs]);
 
   return (
     <nav
@@ -60,26 +64,59 @@ const Navbar = () => {
                     className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer"
                     onClick={() => setIsOpenBis(!isOpenBis)}
                   >
-                    <i className="w-10 flex justify-center items-center text-primary">
+                    <i
+                      className={`w-10 flex justify-center items-center text-primary ${
+                        isOpenBis ? "-rotate-90" : ""
+                      }`}
+                    >
                       {" "}
                       <FontAwesomeIcon icon={faCaretLeft} />{" "}
                     </i>
                     Notifications
                     {isOpenBis && (
-                      <ul className="absolute -left-1 -translate-x-full bg-white text-black w-40">
-                        {roads
-                          .filter((road) => road.show === "log")
-                          .map((road) => {
+                      <ul className="absolute top-10 left-0 md:-left-1 md:-translate-x-full bg-white text-black ">
+                        {boxNotifs &&
+                          boxNotifs.map((usenotif) => {
+                            let notifData = allUsersData.filter(
+                              (user: any) => user._id === usenotif
+                            );
+                            let newNotif = notifData[0];
+                            // console.log(newNotif);
                             return (
-                              <Link to={road.link} key={road.id}>
-                                <li className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer">
-                                  <i className="w-10 flex justify-center items-center text-primary">
-                                    {" "}
-                                    {road.icon}{" "}
-                                  </i>
-                                  {road.name}
-                                </li>
-                              </Link>
+                              <li
+                                key={newNotif._id}
+                                className="text-xl px-3 py-1.5 flex items-center justify-between hover:bg-black/5"
+                              >
+                                <div className="flex items-center w-44">
+                                  <Avatar
+                                    alt="userPicture"
+                                    src={newNotif.picture}
+                                  />
+                                  <div className="ml-3 flex ">
+                                    <h4>
+                                      {newNotif.firstName} {newNotif.lastName}
+                                    </h4>
+                                    <p className="hidden md:block">
+                                      Want to be your friend
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex justify-between items-center w-16 drop-shadow-md">
+                                  <span className="border-2 rounded-full p-1 w-6 h-6 flex justify-center items-center text-red">
+                                    <FontAwesomeIcon
+                                      icon={faX}
+                                      className={`text-xs `}
+                                    />
+                                  </span>
+
+                                  <span className="border-2 rounded-full p-1 w-8 h-8 flex justify-center items-center text-green">
+                                    <FontAwesomeIcon
+                                      icon={faV}
+                                      className={`text-base `}
+                                    />
+                                  </span>
+                                </div>
+                              </li>
                             );
                           })}
                       </ul>
