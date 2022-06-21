@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { UidContext } from "./AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +16,7 @@ import { RouteData } from "./Routes/RouteData";
 
 const Navbar = () => {
   const uid = useContext(UidContext);
+  const ref = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isOpenBis, setIsOpenBis] = useState<boolean>(false);
   const [notif, setNotif] = useState<boolean>(true);
@@ -29,6 +30,19 @@ const Navbar = () => {
     boxNotifs ? setNotif(false) : setNotif(true);
   }, [notif, boxNotifs]);
 
+  useEffect(() => {
+    const clickOut = (e: Event) => {
+      if (isOpen && ref.current && !ref.current.contains(e.target as Node)) {
+        setIsOpen(false);
+        setIsOpenBis(false);
+      }
+    };
+    document.addEventListener("mousedown", clickOut);
+    return () => {
+      document.addEventListener("mousedown", clickOut);
+    };
+  }, [isOpen]);
+
   return (
     <nav
       className={`bg-primary shadow-md left-2/4 -translate-x-2/4 w-full z-10 max-w-[260px] ml-6 md:ml-0 md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl mx-auto py-3 mt-6 px-6 flex items-center justify-between text-white drop-shadow-md ${
@@ -41,7 +55,7 @@ const Navbar = () => {
         </h1>
       </NavLink>
       {roads && (
-        <div className={`grow flex items-center justify-end`}>
+        <div ref={ref} className={`grow flex items-center justify-end`}>
           {uid ? (
             <>
               <Badge
@@ -64,17 +78,26 @@ const Navbar = () => {
                     className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer"
                     onClick={() => setIsOpenBis(!isOpenBis)}
                   >
-                    <i
-                      className={`w-10 flex justify-center items-center text-primary ${
-                        isOpenBis ? "-rotate-90" : ""
-                      }`}
+                    {" "}
+                    <Badge
+                      color="secondary"
+                      badgeContent=" "
+                      variant="dot"
+                      invisible={notif}
+                      className="w-full"
                     >
-                      {" "}
-                      <FontAwesomeIcon icon={faCaretLeft} />{" "}
-                    </i>
-                    Notifications
+                      <i
+                        className={`w-10 flex justify-center items-center text-primary ${
+                          isOpenBis ? "-rotate-90" : ""
+                        }`}
+                      >
+                        {" "}
+                        <FontAwesomeIcon icon={faCaretLeft} />{" "}
+                      </i>
+                      Notifications
+                    </Badge>
                     {isOpenBis && (
-                      <ul className="absolute top-10 left-0 md:-left-1 md:-translate-x-full bg-white text-black ">
+                      <ul className="absolute top-10 md:top-5 left-0 md:-left-1 md:-translate-x-full bg-white text-black ">
                         {boxNotifs &&
                           boxNotifs.map((usenotif) => {
                             let notifData = allUsersData.filter(
@@ -87,34 +110,34 @@ const Navbar = () => {
                                 key={newNotif._id}
                                 className="text-xl px-3 py-1.5 flex items-center justify-between hover:bg-black/5"
                               >
-                                <div className="flex items-center w-44">
+                                <div className="flex items-center w-44 md:w-60 ">
                                   <Avatar
                                     alt="userPicture"
                                     src={newNotif.picture}
                                   />
-                                  <div className="ml-3 flex ">
+                                  <div className="ml-3 flex flex-col">
                                     <h4>
                                       {newNotif.firstName} {newNotif.lastName}
                                     </h4>
-                                    <p className="hidden md:block">
+                                    <p className="hidden md:block text-sm italic">
                                       Want to be your friend
                                     </p>
                                   </div>
                                 </div>
-                                <div className="flex justify-between items-center w-16 drop-shadow-md">
-                                  <span className="border-2 rounded-full p-1 w-6 h-6 flex justify-center items-center text-red">
+                                <div className="flex justify-between items-center w-16 ">
+                                  <button className="border-2 rounded-full p-1 w-6 h-6 flex justify-center items-center text-red shadow-md">
                                     <FontAwesomeIcon
                                       icon={faX}
                                       className={`text-xs `}
                                     />
-                                  </span>
+                                  </button>
 
-                                  <span className="border-2 rounded-full p-1 w-8 h-8 flex justify-center items-center text-green">
+                                  <button className="border-2 rounded-full p-1 w-8 h-8 flex justify-center items-center text-green shadow-md">
                                     <FontAwesomeIcon
                                       icon={faV}
                                       className={`text-base `}
                                     />
-                                  </span>
+                                  </button>
                                 </div>
                               </li>
                             );
@@ -122,6 +145,7 @@ const Navbar = () => {
                       </ul>
                     )}
                   </li>
+
                   {roads
                     .filter((road) => road.show === "log")
                     .map((road) => {
