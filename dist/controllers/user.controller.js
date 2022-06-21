@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.acceptFriend = exports.addFriend = exports.unfollow = exports.follow = exports.deleteUser = exports.updateUser = exports.userInfo = exports.getAllUsers = void 0;
+exports.deleteRequestFriend = exports.acceptFriend = exports.addFriend = exports.unfollow = exports.follow = exports.deleteUser = exports.updateUser = exports.userInfo = exports.getAllUsers = void 0;
 const user_model_1 = __importDefault(require("./../models/user.model"));
 const mongoose_1 = require("mongoose");
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -149,4 +149,24 @@ const acceptFriend = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.acceptFriend = acceptFriend;
+const deleteRequestFriend = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!mongoose_1.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).send("ID unknown : " + req.params.id);
+    }
+    else if (!mongoose_1.Types.ObjectId.isValid(req.params.idToAccept)) {
+        return res.status(400).send("Follow unknown : " + req.params.idToAccept);
+    }
+    try {
+        yield user_model_1.default.findByIdAndUpdate(req.params.id, { $pull: { friendRequestSend: req.params.idToAccept } })
+            .then((docs) => res.status(200).json(docs))
+            .catch((err) => res.status(400).send({ message: err }));
+        yield user_model_1.default.findByIdAndUpdate(req.params.idToAccept, { $pull: { friendRequestReceived: req.params.id } }, { new: true, upsert: true })
+            .then()
+            .catch((err) => res.status(400).send({ message: err }));
+    }
+    catch (err) {
+        return res.status(400).send({ message: err });
+    }
+});
+exports.deleteRequestFriend = deleteRequestFriend;
 //# sourceMappingURL=user.controller.js.map
