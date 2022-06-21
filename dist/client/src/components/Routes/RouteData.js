@@ -20,13 +20,6 @@ exports.RouteData = [
         icon: (0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faUserPlus }),
     },
     {
-        id: 3,
-        name: "Notifications",
-        link: "/notification",
-        show: "log",
-        icon: (0, jsx_runtime_1.jsx)(react_fontawesome_1.FontAwesomeIcon, { icon: free_solid_svg_icons_1.faCaretLeft }),
-    },
-    {
         id: 4,
         name: "Profil",
         link: "/profil",

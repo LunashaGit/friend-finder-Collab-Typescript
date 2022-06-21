@@ -1,8 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { UidContext } from "./AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGroup, faGear } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserGroup,
+  faGear,
+  faCaretLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Logout from "./Log/Logout";
 import { Avatar, Badge } from "@mui/material";
@@ -11,9 +15,15 @@ import { RouteData } from "./Routes/RouteData";
 const Navbar = () => {
   const uid = useContext(UidContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpenBis, setIsOpenBis] = useState<boolean>(false);
+  const [notif, setNotif] = useState<boolean>(true);
   const userData = useSelector((state: any) => state.userReducer);
   const location = useLocation();
   const roads = RouteData;
+
+  useEffect(() => {
+    userData.friendRequestReceived ? setNotif(false) : setNotif(true);
+  }, [notif, userData.friendRequestReceived]);
 
   return (
     <nav
@@ -35,6 +45,7 @@ const Navbar = () => {
                 overlap="circular"
                 badgeContent=" "
                 variant="dot"
+                invisible={notif}
               >
                 <Avatar
                   alt="userPicture"
@@ -45,15 +56,41 @@ const Navbar = () => {
               </Badge>
               {isOpen && (
                 <ul className="absolute bg-white text-black w-60 right-12 top-12">
+                  <li
+                    className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer"
+                    onClick={() => setIsOpenBis(!isOpenBis)}
+                  >
+                    <i className="w-10 flex justify-center items-center text-primary">
+                      {" "}
+                      <FontAwesomeIcon icon={faCaretLeft} />{" "}
+                    </i>
+                    Notifications
+                    {isOpenBis && (
+                      <ul className="absolute -left-1 -translate-x-full bg-white text-black w-40">
+                        {roads
+                          .filter((road) => road.show === "log")
+                          .map((road) => {
+                            return (
+                              <Link to={road.link} key={road.id}>
+                                <li className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer">
+                                  <i className="w-10 flex justify-center items-center text-primary">
+                                    {" "}
+                                    {road.icon}{" "}
+                                  </i>
+                                  {road.name}
+                                </li>
+                              </Link>
+                            );
+                          })}
+                      </ul>
+                    )}
+                  </li>
                   {roads
                     .filter((road) => road.show === "log")
                     .map((road) => {
                       return (
-                        <Link to={road.link}>
-                          <li
-                            key={road.id}
-                            className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer"
-                          >
+                        <Link to={road.link} key={road.id}>
+                          <li className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer">
                             <i className="w-10 flex justify-center items-center text-primary">
                               {" "}
                               {road.icon}{" "}
@@ -80,11 +117,8 @@ const Navbar = () => {
                     .filter((road) => road.show === "noLog")
                     .map((road) => {
                       return (
-                        <Link to={road.link}>
-                          <li
-                            key={road.id}
-                            className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer"
-                          >
+                        <Link to={road.link} key={road.id}>
+                          <li className="text-xl px-3 py-1.5 flex hover:bg-black/5 cursor-pointer">
                             <i className="w-10 flex justify-center items-center text-primary">
                               {" "}
                               {road.icon}{" "}

@@ -1,6 +1,5 @@
 import {
   faArrowRightToBracket,
-  faCaretLeft,
   faLocationDot,
   faUser,
   faUserPlus,
@@ -27,13 +26,6 @@ export const RouteData: {
     link: "/signup",
     show: "noLog",
     icon: <FontAwesomeIcon icon={faUserPlus} />,
-  },
-  {
-    id: 3,
-    name: "Notifications",
-    link: "/notification",
-    show: "log",
-    icon: <FontAwesomeIcon icon={faCaretLeft} />,
   },
   {
     id: 4,
