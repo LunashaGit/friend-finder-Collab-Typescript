@@ -3,13 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.followUser = exports.updateBio = exports.uploadPicture = exports.getUser = exports.UNFOLLOW_USER = exports.FOLLOW_USER = exports.UPDATE_BIO = exports.UPLOAD_PICTURE = exports.GET_USER = void 0;
+exports.deleteFriend = exports.acceptFriend = exports.updateBio = exports.uploadPicture = exports.getUser = exports.DELETE_FRIEND = exports.ACCEPT_FRIEND = exports.UPDATE_BIO = exports.UPLOAD_PICTURE = exports.GET_USER = void 0;
 const axios_1 = __importDefault(require("axios"));
 exports.GET_USER = "GET_USER";
 exports.UPLOAD_PICTURE = "UPLOAD_PICTURE";
 exports.UPDATE_BIO = "UPDATE_BIO";
-exports.FOLLOW_USER = "FOLLOW_USER";
-exports.UNFOLLOW_USER = "UNFOLLOW_USER";
+exports.ACCEPT_FRIEND = "ACCEPT_FRIEND";
+exports.DELETE_FRIEND = "DELETE_FRIEND";
 const getUser = (uid) => {
     return (dispatch) => {
         return axios_1.default
@@ -51,20 +51,32 @@ const updateBio = (userId, bio) => {
     };
 };
 exports.updateBio = updateBio;
-const followUser = (followerId, idToFollow) => {
+const acceptFriend = (idToAccept, userId) => {
     return (dispatch) => {
         return axios_1.default
-            .patch(`${process.env.REACT_APP_API_URL}api/user/follow/${followerId}`, {
-            idToFollow,
-        })
+            .patch(`${process.env.REACT_APP_API_URL}api/user/accept-friend/${userId}/${idToAccept}`)
             .then((res) => {
             dispatch({
-                type: exports.FOLLOW_USER,
-                payload: idToFollow,
+                type: exports.ACCEPT_FRIEND,
+                payload: idToAccept,
             });
         })
             .catch((err) => console.log(err));
     };
 };
-exports.followUser = followUser;
+exports.acceptFriend = acceptFriend;
+const deleteFriend = (idToDelete, userId) => {
+    return (dispatch) => {
+        return axios_1.default
+            .delete(`${process.env.REACT_APP_API_URL}api/user/delete-request-friend/${userId}/${idToDelete}`)
+            .then((res) => {
+            dispatch({
+                type: exports.DELETE_FRIEND,
+                payload: idToDelete,
+            });
+        })
+            .catch((err) => console.log(err));
+    };
+};
+exports.deleteFriend = deleteFriend;
 //# sourceMappingURL=user.actions.js.map

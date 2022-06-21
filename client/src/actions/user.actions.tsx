@@ -3,8 +3,8 @@ import axios from "axios";
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "UPDATE_BIO";
-export const FOLLOW_USER = "FOLLOW_USER";
-export const UNFOLLOW_USER = "UNFOLLOW_USER";
+export const ACCEPT_FRIEND = "ACCEPT_FRIEND";
+export const DELETE_FRIEND = "DELETE_FRIEND";
 
 export const getUser = (uid: any) => {
   return (dispatch: any) => {
@@ -47,16 +47,31 @@ export const updateBio = (userId: any, bio: any) => {
   };
 };
 
-export const followUser = (followerId: string, idToFollow: string) => {
+export const acceptFriend = (idToAccept: string, userId: string) => {
   return (dispatch: any) => {
     return axios
-      .patch(`${process.env.REACT_APP_API_URL}api/user/follow/${followerId}`, {
-        idToFollow,
-      })
+      .patch(
+        `${process.env.REACT_APP_API_URL}api/user/accept-friend/${userId}/${idToAccept}`
+      )
       .then((res) => {
         dispatch({
-          type: FOLLOW_USER,
-          payload: idToFollow,
+          type: ACCEPT_FRIEND,
+          payload: idToAccept,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+export const deleteFriend = (idToDelete: string, userId: string) => {
+  return (dispatch: any) => {
+    return axios
+      .delete(
+        `${process.env.REACT_APP_API_URL}api/user/delete-request-friend/${userId}/${idToDelete}`
+      )
+      .then((res) => {
+        dispatch({
+          type: DELETE_FRIEND,
+          payload: idToDelete,
         });
       })
       .catch((err) => console.log(err));

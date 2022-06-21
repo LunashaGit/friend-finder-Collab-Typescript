@@ -30,7 +30,10 @@ router.patch("/unfollow/:id", userController.unfollow);
 
 router.patch("/add-friend/:id/:idToFollow", userController.addFriend);
 router.patch("/accept-friend/:id/:idToAccept", userController.acceptFriend);
-router.patch("/delete-request-friend/:id/:idToAccept", userController.deleteRequestFriend);
+router.delete(
+  "/delete-request-friend/:id/:idToAccept",
+  userController.deleteRequestFriend
+);
 router.patch("/remove-friend/:id", userController.follow);
 
 //upload

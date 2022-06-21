@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UidContext } from "./AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,6 +13,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import Logout from "./Log/Logout";
 import { Avatar, Badge } from "@mui/material";
 import { RouteData } from "./Routes/RouteData";
+import { acceptFriend } from "../actions/user.actions";
 
 const Navbar = () => {
   const uid = useContext(UidContext);
@@ -25,6 +26,7 @@ const Navbar = () => {
   const location = useLocation();
   const roads = RouteData;
   const boxNotifs: string[] = userData.friendRequestReceived;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     boxNotifs ? setNotif(false) : setNotif(true);
@@ -42,6 +44,11 @@ const Navbar = () => {
       document.addEventListener("mousedown", clickOut);
     };
   }, [isOpen]);
+
+  const handleValidFriend = (idToAccept: any) => {
+    dispatch<any>(acceptFriend(idToAccept, userData._id));
+  };
+  const handleDeleteFriend = () => {};
 
   return (
     <nav
@@ -108,12 +115,13 @@ const Navbar = () => {
                             return (
                               <li
                                 key={newNotif._id}
-                                className="text-xl px-3 py-1.5 flex items-center justify-between hover:bg-black/5"
+                                className="text-lg md:text-xl px-3 py-1.5 flex items-center justify-between hover:bg-black/5"
                               >
-                                <div className="flex items-center w-44 md:w-60 ">
+                                <div className="flex items-center w-44 md:w-60 pr-3">
                                   <Avatar
                                     alt="userPicture"
                                     src={newNotif.picture}
+                                    className="shadow-md"
                                   />
                                   <div className="ml-3 flex flex-col">
                                     <h4>
@@ -125,14 +133,22 @@ const Navbar = () => {
                                   </div>
                                 </div>
                                 <div className="flex justify-between items-center w-16 ">
-                                  <button className="border-2 rounded-full p-1 w-6 h-6 flex justify-center items-center text-red shadow-md">
+                                  <button
+                                    onClick={handleDeleteFriend}
+                                    className="border-2 rounded-full p-1 w-6 h-6 flex justify-center items-center text-red shadow-md"
+                                  >
                                     <FontAwesomeIcon
                                       icon={faX}
                                       className={`text-xs `}
                                     />
                                   </button>
 
-                                  <button className="border-2 rounded-full p-1 w-8 h-8 flex justify-center items-center text-green shadow-md">
+                                  <button
+                                    onClick={() =>
+                                      handleValidFriend(newNotif._id)
+                                    }
+                                    className="border-2 rounded-full p-1 w-8 h-8 flex justify-center items-center text-green shadow-md"
+                                  >
                                     <FontAwesomeIcon
                                       icon={faV}
                                       className={`text-base `}
