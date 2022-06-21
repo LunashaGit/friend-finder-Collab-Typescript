@@ -13,7 +13,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import Logout from "./Log/Logout";
 import { Avatar, Badge } from "@mui/material";
 import { RouteData } from "./Routes/RouteData";
-import { acceptFriend } from "../actions/user.actions";
+import { acceptFriend, deleteFriend } from "../actions/user.actions";
 
 const Navbar = () => {
   const uid = useContext(UidContext);
@@ -47,8 +47,11 @@ const Navbar = () => {
 
   const handleValidFriend = (idToAccept: any) => {
     dispatch<any>(acceptFriend(idToAccept, userData._id));
+    dispatch<any>(deleteFriend(idToAccept, userData._id));
   };
-  const handleDeleteFriend = () => {};
+  const handleDeleteFriend = (idToDelete: any) => {
+    dispatch<any>(deleteFriend(idToDelete, userData._id));
+  };
 
   return (
     <nav
@@ -134,7 +137,9 @@ const Navbar = () => {
                                 </div>
                                 <div className="flex justify-between items-center w-16 ">
                                   <button
-                                    onClick={handleDeleteFriend}
+                                    onClick={() =>
+                                      handleDeleteFriend(newNotif._id)
+                                    }
                                     className="border-2 rounded-full p-1 w-6 h-6 flex justify-center items-center text-red shadow-md"
                                   >
                                     <FontAwesomeIcon

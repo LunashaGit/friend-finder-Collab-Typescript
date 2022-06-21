@@ -65,7 +65,7 @@ export const acceptFriend = (idToAccept: string, userId: string) => {
 export const deleteFriend = (idToDelete: string, userId: string) => {
   return (dispatch: any) => {
     return axios
-      .delete(
+      .patch(
         `${process.env.REACT_APP_API_URL}api/user/delete-request-friend/${userId}/${idToDelete}`
       )
       .then((res) => {

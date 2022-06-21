@@ -6,7 +6,25 @@ import {
   UPLOAD_PICTURE,
 } from "../actions/user.actions";
 
-const initialState = {};
+interface stateProps {
+  pseudo?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  adresse?: string;
+  latitude?: number;
+  longitude?: number;
+  password?: string;
+  picture?: string;
+  bio?: string;
+  friendRequestSend?: [string];
+  friendRequestReceived?: [string];
+  friends?: [string];
+  hobbies?: [string];
+  isAdmin?: boolean;
+  userInterestedIn?: [string];
+}
+const initialState: stateProps = {};
 
 export default function userReducer(state = initialState, action: any) {
   switch (action.type) {
@@ -28,12 +46,16 @@ export default function userReducer(state = initialState, action: any) {
         friends: action.payload,
       };
     case DELETE_FRIEND:
-      return {
-        ...state,
-        friendRequestReceived: state.friendRequestReceived.filter(
-          (id: any) => id !== action.payload
-        ),
-      };
+      if (state.friendRequestReceived) {
+        return {
+          ...state,
+          friendRequestReceived: state.friendRequestReceived.filter(
+            (id: any) => id !== action.payload
+          ),
+        };
+      } else {
+        return state;
+      }
 
     default:
       return state;

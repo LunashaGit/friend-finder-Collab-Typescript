@@ -13,7 +13,12 @@ function userReducer(state = initialState, action) {
         case user_actions_1.ACCEPT_FRIEND:
             return Object.assign(Object.assign({}, state), { friends: action.payload });
         case user_actions_1.DELETE_FRIEND:
-            return Object.assign(Object.assign({}, state), { friendRequestReceived: state.friendRequestReceived.filter((id) => id !== action.payload) });
+            if (state.friendRequestReceived) {
+                return Object.assign(Object.assign({}, state), { friendRequestReceived: state.friendRequestReceived.filter((id) => id !== action.payload) });
+            }
+            else {
+                return state;
+            }
         default:
             return state;
     }
