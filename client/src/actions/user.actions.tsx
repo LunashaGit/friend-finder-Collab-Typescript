@@ -66,7 +66,7 @@ export const deleteFriend = (idToDelete: string, userId: string) => {
   return (dispatch: any) => {
     return axios
       .patch(
-        `${process.env.REACT_APP_API_URL}api/user/delete-request-friend/${userId}/${idToDelete}`
+        `${process.env.REACT_APP_API_URL}api/user/delete-request-friend/${idToDelete}/${userId}`
       )
       .then((res) => {
         dispatch({

@@ -30,7 +30,7 @@ router.patch("/unfollow/:id", userController.unfollow);
 
 router.patch("/add-friend/:id/:idToFollow", userController.addFriend);
 router.patch("/accept-friend/:id/:idToAccept", userController.acceptFriend);
-router.delete(
+router.patch(
   "/delete-request-friend/:id/:idToAccept",
   userController.deleteRequestFriend
 );
