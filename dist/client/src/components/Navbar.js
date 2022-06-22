@@ -27,7 +27,9 @@ const Navbar = () => {
     const boxNotifs = userData.friendRequestReceived;
     const dispatch = (0, react_redux_1.useDispatch)();
     (0, react_1.useEffect)(() => {
-        boxNotifs ? setNotif(false) : setNotif(true);
+        if (boxNotifs !== undefined) {
+            !boxNotifs.length ? setNotif(true) : setNotif(false);
+        }
     }, [notif, boxNotifs]);
     (0, react_1.useEffect)(() => {
         const clickOut = (e) => {

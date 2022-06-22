@@ -29,7 +29,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    boxNotifs ? setNotif(false) : setNotif(true);
+    if (boxNotifs !== undefined) {
+      !boxNotifs.length ? setNotif(true) : setNotif(false);
+    }
   }, [notif, boxNotifs]);
 
   useEffect(() => {
