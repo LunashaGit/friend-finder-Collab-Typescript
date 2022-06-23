@@ -3,6 +3,7 @@ import Home from "./../../pages/Home";
 import Navbar from "../Navbar";
 import Profil from "./../../pages/profil";
 import Spots from "../../pages/spots";
+import SpotEdit from "../../pages/spotEdit";
 import SignInSide from "../../pages/signin";
 import SignUpSide from "../../pages/signup";
 import { useContext } from "react";
@@ -20,6 +21,7 @@ const index = () => {
         {!uid && <Route path="/signin" element={<SignInSide />} />}
         {!uid && <Route path="/signup" element={<SignUpSide />} />}
         <Route path="/spots" element={<Spots />} />
+        <Route path="/spotEdit" element={<SpotEdit/>} />
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>

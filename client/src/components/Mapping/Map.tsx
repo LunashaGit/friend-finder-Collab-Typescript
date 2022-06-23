@@ -47,32 +47,28 @@ const hobbies  = useSelector((state: any) => state.spotsReducer);
           const icon:any = passions.find(hobb => hobb.name === hobby.hobbies[0])
             let hobIcon = L.icon({
               iconUrl: `../../img/${icon.icon}`,
-              iconSize: [50, 50], // size of the icon
-              iconAnchor: [25, 50], // point of the icon which will correspond to marker's location
+              iconSize: [30, 30], // size of the icon
+              iconAnchor: [5, 50], // point of the icon which will correspond to marker's location
               popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+              shadowUrl: `../../img/spot.png`,
+              shadowSize:   [80, 80],
+              shadowAnchor: [30, 60],  // the same for the shadow
+              
             });
           
           return (
           <Marker position={[hobby.latitude, hobby.longitude]} icon={hobIcon} key={hobby._id}>
             <Popup>
-            {hobby.hobbies[0]}
+            {hobby.spotName}
             </Popup>
           </Marker>
         )
         })}
-        {/* {hobbies.map((hobby : any) => {
-        <Marker position={[hobby.latitude, hobby.longitude]} icon={meIcon}>
-          <Popup>
-            Une super activité !
-          </Popup>
-        </Marker>
-        })} */}
-
       </MapContainer>
     </>
   );
 };
-Map.defaultProps = {
+Map.defaultProps = { // rue de Mulhouse 36 - 4000 Liège
   latitude: 50.632744,
   longitude: 5.586157,
 };

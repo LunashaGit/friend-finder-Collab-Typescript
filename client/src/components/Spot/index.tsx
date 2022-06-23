@@ -39,7 +39,7 @@ const Spot = (props: SpotProps) => {
             id="list"
             className={listSpotsModal ? "active-btn" : ""}
           >
-          Voir ses spots
+          Voir vos spots
           </Button>
         </Stack>
         {listSpotsModal && <ListSpots />}
