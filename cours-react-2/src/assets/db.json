@@ -1,0 +1,35 @@
+{
+  "articles": [
+    {
+      "author": "From Scratch",
+      "content": "      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente doloribus vel sunt laborum eos enim odit maxime corporis vero nihil voluptatum a, ullam delectus ad sit. Odit quis adipisci illo sit porro recusandae? Sequi, dolorum repellendus doloremque qui tempora beatae.",
+      "date": 1621530288602,
+      "id": 1
+    },
+    {
+      "author": "Bill Gates",
+      "content": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente doloribus vel sunt laborum eos enim odit maxime corporis vero nihil voluptatum a, ullam delectus ad sit. Odit quis adipisci illo sit porro recusandae? Sequi, dolorum repellendus doloremque qui tempora beatae.\n\nLorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente doloribus vel sunt laborum eos enim odit maxime corporis vero nihil voluptatum a, ullam delectus ad sit. Odit quis adipisci illo sit porro recusandae? Sequi, dolorum repellendus doloremque qui tempora beatae.",
+      "date": 1621536029778,
+      "id": 2
+    },
+    {
+      "author": "Mark Zuckerberg",
+      "content": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente doloribus vel sunt laborum eos enim odit maxime corporis vero nihil voluptatum a, ullam delectus ad sit. Odit quis adipisci illo sit porro recusandae? Sequi, dolorum repellendus doloremque qui tempora beatae.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente doloribus vel sunt laborum eos enim odit maxime corporis vero nihil voluptatum a, ullam delectus ad sit. ",
+      "date": 1621536056135,
+      "id": 3
+    },
+    {
+      "author": "Wikipedia",
+      "content": "La dénomination d’afrancesado (« francisé », « francophile »1), dont l'emploi se généralise en Espagne au xviiie siècle, s'applique en particulier aux membres de l'élite espagnole ayant juré fidélité en 1808 au roi français Joseph-Napoléon Ier, qui occupe le trône d'Espagne après les abdications de Ferdinand VII et de Charles IV, sous les pressions de Napoléon.",
+      "date": 1657269622086,
+      "id": 5
+    },
+    {
+      "author": "Wikipedia",
+      "content": "Le mizuhiki (水引?, litt. « conduire l'eau », en référence aux tuyaux) est un art japonais de création de volumes à base de cordelettes de papier tressé, aujourd'hui souvent remplacé par des tuyaux en polyester, et des scoubidous!\n",
+      "date": 1657270166505,
+      "updatedDate": 1657652922875,
+      "id": 7
+    }
+  ]
+}
