@@ -75,7 +75,6 @@ const Map = ({ latitude, longitude }: mapProps) => {
               shadowAnchor: [30, 60],  // the same for the shadow
               
             });
-<<<<<<< HEAD
 
             return (
               <div key={hobby._id}>
@@ -105,17 +104,6 @@ const Map = ({ latitude, longitude }: mapProps) => {
               </div>
             );
           })}
-=======
-          
-          return (
-          <Marker position={[hobby.latitude, hobby.longitude]} icon={hobIcon} key={hobby._id}>
-            <Popup>
-            {hobby.spotName}
-            </Popup>
-          </Marker>
-        )
-        })}
->>>>>>> da93d87cd6bcd3f242803a32cdcae88b082ecfdd
       </MapContainer>
     </>
   );
